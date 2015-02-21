@@ -140,6 +140,15 @@
       label.rotation.y = Math.PI;
       scene.add(label);
 
+      var //texture = THREE.ImageUtils.loadTexture('crate.gif'),
+        texture = THREE.ImageUtils.loadTexture('img/crate.jpg'),
+        material = new THREE.MeshBasicMaterial({map: texture, side: THREE.DoubleSide}),
+         geometry = new THREE.PlaneGeometry(4, 4),
+        mesh = new THREE.Mesh(geometry, material);
+
+      mesh.position.set(0, 7, 9);
+      scene.add(mesh);
+
       requestAnimationFrame( animate );
       window.addEventListener( 'resize', onWindowResize, false );
 
