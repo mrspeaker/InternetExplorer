@@ -4,7 +4,7 @@ class RedditAPI {
 
   redditURL ( subReddit = "perfectloops" ) {
 
-    return `http://www.reddit.com/r/${subReddit}/top.json?sort=top&t=all&jsonp=callbackFunction`;
+    return `http://www.reddit.com/r/${subReddit}/top.json?sort=hot&t=all&jsonp=callbackFunction`;
 
   }
 

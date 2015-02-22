@@ -15,7 +15,7 @@ const ob = Oblisk();
 ob.position.set(0, 5, 10);
 world.add(ob);
 
-RedditAPI.load("gamedev")
+RedditAPI.load("aww")
   .then(createSign)
   .then(signs => signs.forEach(sign => world.add(sign)));
 

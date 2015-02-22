@@ -60,7 +60,7 @@ function animate ( time ) {
 
   controls.update();
 
-  dolly.translateZ( -keys.y() * speed );
+  dolly.translateZ( keys.y() * speed );
   dolly.rotation.y -= keys.x() * ( speed * 0.2 );
 
   if (manager.isVRMode()) {

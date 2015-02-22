@@ -1,16 +1,33 @@
 import createCanvasPlane from "../createCanvasPlane";
 import wrapCanvasText from "../wrapCanvasText";
+import ImgUrMesh from "./ImgUrMesh";
 
-const Sign = (title = "title") => createCanvasPlane(256, 256, function (ctx, w, h) {
+const Sign = (title = "title", url) => {
 
-  ctx.font = "22pt Helvetica";
+  const group = new THREE.Group();
+  const text = createCanvasPlane(256, 256, function (ctx, w, h) {
 
-  ctx.fillStyle = "#000";
-  ctx.fillRect(0, 0, w, h);
+    ctx.font = "22pt Helvetica";
 
-  ctx.fillStyle = "rgba(255, 255, 255, 0.8)";
-  wrapCanvasText(ctx, title, 0, 30, w, 30)
+    ctx.fillStyle = "#000";
+    ctx.fillRect(0, 0, w, h);
 
-});
+    ctx.fillStyle = "rgba(255, 255, 255, 0.8)";
+    wrapCanvasText(ctx, title, 0, 30, w, 30)
+
+  });
+
+  group.add(text);
+
+  console.log(url.indexOf("imgur.com"), url)
+  if (url.indexOf("imgur.com") >= 0) {
+    const img = ImgUrMesh(url);
+    img.position.set(0, 0.2, 0);
+    group.add(img);
+    text.position.set(0, 3, -0.1);
+  }
+
+  return group;
+}
 
 export default Sign;
