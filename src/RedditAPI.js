@@ -2,21 +2,23 @@ import jsonp from "jsonp";
 
 class RedditAPI {
 
-  redditURL (subReddit = "perfectloops") {
+  redditURL ( subReddit = "perfectloops" ) {
 
     return `http://www.reddit.com/r/${subReddit}/top.json?sort=top&t=all&jsonp=callbackFunction`;
 
   }
 
-  load (subReddit) {
+  load ( subReddit ) {
 
-    return new Promise((resolve, reject) => {
+    return new Promise( ( resolve, reject ) => {
 
       jsonp(
-        this.redditURL(subReddit),
+        this.redditURL( subReddit ),
         { param: "jsonp" },
-        (err, data) => {
-          err ? reject(err) : resolve(data.data.children);
+        ( err, data ) => {
+
+          err ? reject( err ) : resolve( data.data.children );
+
         });
 
     });

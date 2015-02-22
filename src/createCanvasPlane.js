@@ -1,7 +1,7 @@
-const createCanvasPlane = function (w, h, drawFunc) {
+const createCanvasPlane = function ( w, h, drawFunc ) {
 
-  let canvas = document.createElement("canvas"),
-    ctx = canvas.getContext("2d"),
+  let canvas = document.createElement( "canvas" ),
+    ctx = canvas.getContext( "2d" ),
     scale = 0.01,
     texture,
     material,
@@ -11,9 +11,9 @@ const createCanvasPlane = function (w, h, drawFunc) {
   canvas.width = w;
   canvas.height = h;
 
-  drawFunc(ctx, w, h);
+  drawFunc( ctx, w, h );
 
-  texture = new THREE.Texture(canvas);
+  texture = new THREE.Texture( canvas );
   texture.needsUpdate = true;
 
   material = new THREE.MeshBasicMaterial({
@@ -22,10 +22,10 @@ const createCanvasPlane = function (w, h, drawFunc) {
     transparent: true
   });
 
-  geometry = new THREE.PlaneBufferGeometry(canvas.width, canvas.height, 1, 1);
-  planeMesh = new THREE.Mesh(geometry, material);
+  geometry = new THREE.PlaneBufferGeometry( canvas.width, canvas.height, 1, 1 );
+  planeMesh = new THREE.Mesh( geometry, material );
 
-  planeMesh.scale.set(scale, scale, scale);
+  planeMesh.scale.set( scale, scale, scale );
 
   return planeMesh;
 
