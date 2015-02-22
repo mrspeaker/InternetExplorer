@@ -15,7 +15,9 @@ const ob = Oblisk();
 ob.position.set(0, 5, 10);
 world.add(ob);
 
-RedditAPI.load("aww")
+const subs = ["aww", "pics", "funny", "mildlyinteresting", "EarthPorn"]
+//
+RedditAPI.load(subs[Math.random() * subs.length | 0])
   .then(createSign)
   .then(signs => signs.forEach(sign => world.add(sign)));
 

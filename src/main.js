@@ -17,7 +17,7 @@ dolly.position.set( 0, 1, 0 );
 scene.add(dolly);
 
 const camera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 1, 20000 );
-camera.position.z = 0.0001;
+//camera.position.z = 0.0001;
 dolly.add( camera );
 
 // Effect and Controls for VR, Initialize the WebVR manager
@@ -60,8 +60,8 @@ function animate ( time ) {
 
   controls.update();
 
-  dolly.translateZ( keys.y() * speed );
   dolly.rotation.y -= keys.x() * ( speed * 0.2 );
+  dolly.translateZ( keys.y() * speed );
 
   if (manager.isVRMode()) {
 

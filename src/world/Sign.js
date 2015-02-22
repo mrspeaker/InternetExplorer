@@ -19,12 +19,11 @@ const Sign = (title = "title", url) => {
 
   group.add(text);
 
-  console.log(url.indexOf("imgur.com"), url)
   if (url.indexOf("imgur.com") >= 0) {
     const img = ImgUrMesh(url);
-    img.position.set(0, 0.2, 0);
+    img.position.set(0, 1, 0);
     group.add(img);
-    text.position.set(0, 3, -0.1);
+    text.position.set(0, 3.5, -0.1);
   }
 
   return group;
