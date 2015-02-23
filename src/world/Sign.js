@@ -21,7 +21,7 @@ const Sign = ( title = "title", url ) => {
   text.position.set( 0, 4.1, 0.28 );
   group.add( text );
 
-  if ( url.indexOf( "imgur.com" ) >= 0 ) {
+  if ( url && url.indexOf( "imgur.com" ) >= 0 ) {
 
     const img = ImgUrMesh( url );
     img.position.set( 0, 1.5, 0.29 );

@@ -3,6 +3,7 @@ import SkyBox from "./SkyBox";
 import ground from "./ground";
 import Oblisk from "./Oblisk";
 import ImgUrMesh from "./ImgUrMesh";
+import Sign from "./Sign";
 import createSigns from "../createSign";
 
 const world = new THREE.Group();
@@ -26,7 +27,6 @@ const positionSigns = ( signs, x, z ) => {
       1,
       35 - (Math.random() * 70) + z
     );
-    console.log(sign.position)
 
     sign.rotation.y = ( Math.PI / 2 ) + ( Math.random() * Math.PI );
 
@@ -41,8 +41,32 @@ const loadSub = ( subReddit, x = 0, z = 0 ) => {
   RedditAPI
     .load( subReddit )
     .then( createSigns )
-    .then( (signs) => positionSigns (signs, x, z) )
+    .then( signs => positionSigns (signs, x, z) )
     .then( signs => signs.forEach( sign => world.add( sign ) ) );
+
+}
+
+const findRelatedSubs = ( subReddit, x = 0, z = 0 ) => {
+
+  RedditAPI
+    .loadAboutSub( subReddit )
+    .then( about =>  {
+      window.about_data = about;
+      const related = about.description
+        .match(/\/r\/[a-zA-Z]+/g)
+        .map(value => value.toLowerCase())
+        .filter(
+          (value, index, self) => self.indexOf(value) === index
+        );
+      return related;
+    })
+    .then( related => related.map( sub => Sign( sub ) ) )
+    .then( signs => positionSigns (signs, x, z) )
+    .then( signs => signs.map( sign => {
+      sign.position.y = -3;
+      return sign;
+    }))
+    .then( signs => signs.forEach( sign => world.add( sign ) ) )
 
 }
 
@@ -51,6 +75,7 @@ const subs = ["aww", "pics", "funny", "mildlyinteresting", "EarthPorn"];
 loadSub(subs[ Math.random() * subs.length | 0 ]);
 
 export default {
-  loadSub: loadSub,
+  loadSub,
+  findRelatedSubs,
   mesh: world
 };

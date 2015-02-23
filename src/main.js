@@ -7,12 +7,11 @@ const field = new KeyboardFieldInput( (prog, done) => {
 
   if (done) {
 
-    console.log("loading:", done);
-    World.loadSub(
-      prog,
-      dolly.position.x,
-      dolly.position.z
-    );
+    console.log( "Loading sub:", done );
+    const { x, z } = dolly.position;
+
+    World.loadSub( prog, x, z );
+    World.findRelatedSubs( prog , x, z );
 
   }
 
@@ -41,7 +40,6 @@ dolly.add( camera );
 const effect = new THREE.VREffect( renderer );
 const controls = new THREE.VRControls( camera );
 const manager = new WebVRManager( effect );
-
 //controls.zeroSensor();
 
 // lights
@@ -72,6 +70,8 @@ function onWindowResize () {
 
 };
 
+
+//dolly.rotation.y += Math.PI;
 function animate ( time ) {
 
   requestAnimationFrame( animate );
@@ -80,7 +80,7 @@ function animate ( time ) {
 
   //dolly.quaternion.copy(camera.quaternion);
   dolly.rotation.y -= keys.x() * ( speed * 0.12 );
-  dolly.translateZ( -keys.y() * speed );
+  dolly.translateX( -keys.y() * speed );
 
   if ( manager.isVRMode() ) {
 

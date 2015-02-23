@@ -1,4 +1,4 @@
-import jsonp from "jsonp";
+import jsonp from "./cachedJsonP";
 
 class RedditAPI {
 
@@ -10,53 +10,34 @@ class RedditAPI {
 
   load ( subReddit ) {
 
-    const key = "redditCache";
-
-    // localStorage.removeItem( key );
-    const cache = JSON.parse( localStorage.getItem( key ) || "{}" );
-
-    // Remove old cached values
-    Object.keys(cache).forEach(function (key) {
-      const deets = cache[key];
-      console.log(key, Date.now() - deets.time);
-      if (Date.now() - deets.time > 1000 * 60 * 10) {
-        delete cache[key];
-      }
-    });
-
     return new Promise( ( resolve, reject ) => {
-
-      const cachedData = cache[ subReddit ];
-
-      if ( cachedData ) {
-
-        console.log(subReddit, "in the cache");
-        return resolve( cachedData.data );
-
-      }
 
       jsonp(
         this.redditURL( subReddit ),
         { param: "jsonp" },
         ( err, data ) => {
 
-          if ( err ) {
-
-            reject (err);
-
-          } else {
-
-            cache[ subReddit ] = {
-              time: Date.now(),
-              data: data.data.children
-            };
-            localStorage.setItem( key, JSON.stringify( cache ) );
-
-            resolve( data.data.children )
-
-          }
+          err ? reject (err) : resolve( data.data.children )
 
         });
+
+    });
+
+  }
+
+  loadAboutSub ( subReddit ) {
+
+    return new Promise( ( resolve, reject ) => {
+
+      jsonp(
+        `http://www.reddit.com/r/${subReddit}/about.json`,
+        { param: "jsonp" },
+        ( err, data ) => {
+
+          err ? reject (err) : resolve( data.data )
+
+        }
+      )
 
     });
 
