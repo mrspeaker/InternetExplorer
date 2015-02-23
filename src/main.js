@@ -35,13 +35,9 @@ const manager = new WebVRManager( effect );
   directionalLight.position.set( -1, 1, -1 );
   scene.add( directionalLight );
 
-  /*const hemisphereLight = new THREE.HemisphereLight( 0xffffff, 0xffffff, 0.8 );
-  hemisphereLight.position.set( -1, 2, 1.5 );
-  scene.add( hemisphereLight );*/
-
-  const directionalLight1 = new THREE.PointLight( 0x0044ee, 0, 30 );
-  directionalLight1.position.set( 0, -2, 0 );
-  dolly.add( directionalLight1 );
+  const pointy = new THREE.PointLight( 0x0044ee, 0, 30 );
+  pointy.position.set( 0, -2, 0 );
+  dolly.add( pointy );
 
 }
 
