@@ -8,7 +8,11 @@ const field = new KeyboardFieldInput( (prog, done) => {
   if (done) {
 
     console.log("loading:", done);
-    World.loadSub(prog);
+    World.loadSub(
+      prog,
+      dolly.position.x,
+      dolly.position.z
+    );
 
   }
 
