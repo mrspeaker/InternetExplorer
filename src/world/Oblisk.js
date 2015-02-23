@@ -1,8 +1,10 @@
-var box = new THREE.BoxGeometry(10, 20, 1);
-var boxM = new THREE.MeshBasicMaterial({
-  color: 0x000000,
-  fog: false
+const boxM = new THREE.MeshLambertMaterial({
+  color: 0x222222
 });
-var boxMesh = () => new THREE.Mesh(box, boxM);
 
-export default boxMesh;
+export default ( x = 10, y = 20, z = 1 ) => {
+
+  const box = new THREE.BoxGeometry( x, y, z );
+  return new THREE.Mesh( box, boxM );
+
+};

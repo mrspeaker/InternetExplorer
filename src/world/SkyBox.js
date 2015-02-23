@@ -3,9 +3,9 @@ var geometry = new THREE.SphereGeometry(10000, 64, 32);
 var vertices = geometry.vertices;
 var faces = geometry.faces;
 
-var colorTop = new THREE.Color(0x8EC3D5);
-var colorMiddle = new THREE.Color(0x7B67A4);
-var colorBottom = new THREE.Color(0x221046);
+var colorTop = new THREE.Color(0x001F4B);
+var colorMiddle = new THREE.Color(0x1A3C62);
+var colorBottom = new THREE.Color(0x596F87);
 
 for ( var i = 0, l = faces.length; i < l; i ++ ) {
   var face = faces[ i ];

@@ -2,15 +2,15 @@ import Keys from './KeyboardArrowAndActionControls';
 import World from "./world/World";
 
 const keys = new Keys();
-const speed = 0.1;
+const speed = 0.2;
 
 const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.autoClear = false;
-renderer.setClearColor( 0x404040 );
+renderer.setClearColor( 0x222222 );
 document.body.appendChild( renderer.domElement );
 
 const scene = new THREE.Scene();
-scene.fog = new THREE.Fog( 0xcacfde, 0, 1000 );
+scene.fog = new THREE.Fog( 0x000000, 0, 100 );
 
 const dolly = new THREE.Group();
 dolly.position.set( 0, 0, -Math.PI );
@@ -31,13 +31,17 @@ const manager = new WebVRManager( effect );
 // lights
 {
 
-  const directionalLight = new THREE.DirectionalLight( 0xffffff, 0.15 );
+  const directionalLight = new THREE.DirectionalLight( 0xffffff, 0.85 );
   directionalLight.position.set( -1, 1, -1 );
   scene.add( directionalLight );
 
-  const hemisphereLight = new THREE.HemisphereLight( 0xffffff, 0xffffff, 0.8 );
+  /*const hemisphereLight = new THREE.HemisphereLight( 0xffffff, 0xffffff, 0.8 );
   hemisphereLight.position.set( -1, 2, 1.5 );
-  scene.add( hemisphereLight );
+  scene.add( hemisphereLight );*/
+
+  const directionalLight1 = new THREE.PointLight( 0x0044ee, 0, 30 );
+  directionalLight1.position.set( 0, -2, 0 );
+  dolly.add( directionalLight1 );
 
 }
 
@@ -63,7 +67,7 @@ function animate ( time ) {
   controls.update();
 
   //dolly.quaternion.copy(camera.quaternion);
-  dolly.rotation.y -= keys.x() * ( speed * 0.2 );
+  dolly.rotation.y -= keys.x() * ( speed * 0.12 );
   dolly.translateZ( -keys.y() * speed );
 
   if ( manager.isVRMode() ) {
