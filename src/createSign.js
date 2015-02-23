@@ -10,7 +10,9 @@ const createSign = ( posts ) => posts.map( p => {
     Math.random() * 120
   );
 
-  label.rotation.y = Math.PI;
+  label.rotation.y = Math.random() * (Math.PI * 2)
+
+  label.rotation.y = (Math.PI / 2) + (Math.random() * Math.PI);
 
   return label;
 
