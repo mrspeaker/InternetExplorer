@@ -1,4 +1,4 @@
-class KeyboardArrowAndActionControls {
+class KeyboardControls {
 
   constructor () {
 
@@ -57,4 +57,4 @@ class KeyboardArrowAndActionControls {
   }
 }
 
-export default KeyboardArrowAndActionControls;
+export default KeyboardControls;

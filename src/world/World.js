@@ -18,12 +18,20 @@ const imgMesh = ImgUrMesh( "dAvWkN8.jpg" );
 imgMesh.position.set( 0, 5, 9.3 );
 world.add( imgMesh );
 
+const loadSub = ( subReddit ) => {
+
+  RedditAPI
+    .load( subReddit )
+    .then( createSign )
+    .then( signs => signs.forEach( sign => world.add( sign ) ) );
+
+}
 
 const subs = ["aww", "pics", "funny", "mildlyinteresting", "EarthPorn"];
 
-RedditAPI
-  .load( subs[ Math.random() * subs.length | 0 ] )
-  .then( createSign )
-  .then( signs => signs.forEach( sign => world.add( sign ) ) );
+loadSub(subs[ Math.random() * subs.length | 0 ]);
 
-export default world;
+export default {
+  loadSub: loadSub,
+  mesh: world
+};

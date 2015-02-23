@@ -1,7 +1,19 @@
-import Keys from './KeyboardArrowAndActionControls';
+import KeyboardControls from "./KeyboardControls";
+import KeyboardFieldInput from "./KeyboardFieldInput";
 import World from "./world/World";
 
-const keys = new Keys();
+const keys = new KeyboardControls();
+const field = new KeyboardFieldInput( (prog, done) => {
+
+  if (done) {
+
+    console.log("loading:", done);
+    World.loadSub(prog);
+
+  }
+
+});
+
 const speed = 0.2;
 
 const renderer = new THREE.WebGLRenderer({ antialias: true });
@@ -41,7 +53,7 @@ const manager = new WebVRManager( effect );
 
 }
 
-scene.add( World );
+scene.add( World.mesh );
 
 requestAnimationFrame( animate );
 window.addEventListener( "resize", onWindowResize, false );

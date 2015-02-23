@@ -6,3 +6,7 @@ Code uses a bunch of ES6 stuff - I'm using [jspm.io](http://jspm.io/) for buildi
 
 Base code (Stuff in /lib: VRManager, VREffect etc) is from the [Sechelt demo](https://github.com/MozVR/sechelt)
 
+## Notes:
+
+type "/" to enter text mode (no gui yet!). Type a subreddit and hit enter, it will load any imgurlses.
+
