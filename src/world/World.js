@@ -7,7 +7,6 @@ import Sign from "./Sign";
 import createSigns from "../createSign";
 
 const world = new THREE.Group();
-
 world.add( SkyBox() );
 world.add( ground );
 
@@ -63,12 +62,11 @@ const loadSub = ( subReddit, x = 0, z = 0 ) => RedditAPI
 
 const findRelatedSubs = ( subReddit, x = 0, z = 0 ) => RedditAPI
   .loadAboutSub( subReddit )
-  .then( about => about.description
-    .match( /\/r\/[a-zA-Z]+/g )
-    .map( sub => sub.toLowerCase() )
-    .filter(
-      ( value, index, self ) => self.indexOf( value ) === index
-    )
+  .then(
+    about => about.description
+      .match( /\/r\/[a-zA-Z]+/g )
+      .map( sub => sub.toLowerCase() )
+      .filter( ( value, index, self ) => self.indexOf( value ) === index )
   )
   .then( related => related.map( sub => Sign( sub ) ) )
   .then( signs => positionSigns( signs, x, z ) )
@@ -82,7 +80,7 @@ const findRelatedSubs = ( subReddit, x = 0, z = 0 ) => RedditAPI
 
 const subs = [ "aww", "pics", "funny", "mildlyinteresting" ];
 
-loadSub(subs[ Math.random() * subs.length | 0 ]);
+loadSub( subs[ Math.random() * subs.length | 0 ] );
 
 export default {
   loadSub,

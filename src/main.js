@@ -79,8 +79,8 @@ function animate ( time ) {
   controls.update();
 
   dolly.rotation.y -= keys.rot() * ( speed * 0.12 );
-  dolly.translateZ( -keys.x() * speed );
-  dolly.translateX( keys.y() * speed );
+  dolly.translateX( keys.x() * speed );
+  dolly.translateZ( keys.y() * speed );
 
   dolly.translateY( keys.vert() * (speed * 0.5) );
 
@@ -90,7 +90,7 @@ function animate ( time ) {
   var intersects = raycaster.intersectObjects( World.mesh.children, true );
   if (intersects.length) {
 
-    const sign = intersects[0].object.parent;
+    const sign = intersects[ 0 ].object.parent;
     if ( sign && sign._data ) {
 
       sign.scale.x = 1 + ( ( Math.sin( Date.now() / 1000 ) + 1 ) * 0.03 );
@@ -98,23 +98,23 @@ function animate ( time ) {
       if ( keys.enter() ) {
 
         const title = sign._data.title;
-        if (title && title.match(/\/r\/[a-zA-Z]+$/g)) {
+        if ( title && title.match( /\/r\/[a-zA-Z]+$/g ) ) {
 
-          const sub = title.slice(3);
+          const sub = title.slice( 3 );
           const { x, z } = dolly.position;
 
           World.loadSub( sub, x, z );
-          keys.enter(true);
+          keys.enter( true );
 
         }
-        sign.parent.remove(sign);
+        sign.parent.remove( sign );
 
       }
 
       if ( keys.action() ) {
 
-        sign.parent.remove(sign);
-        keys.action(true);
+        sign.parent.remove( sign );
+        keys.action( true );
 
       }
 
