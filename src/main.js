@@ -12,7 +12,6 @@ const field = new KeyboardFieldInput( (prog, done) => {
     const { x, z } = dolly.position;
 
     World.loadSub( prog, x, z );
-    //World.findRelatedSubs( prog , x, z );
 
   }
 
@@ -29,13 +28,13 @@ const scene = new THREE.Scene();
 scene.fog = new THREE.Fog( 0x000000, 0, 100 );
 
 const dolly = new THREE.Group();
-dolly.position.set( 0, 0, -Math.PI );
-//dolly.lookAt(new THREE.Vector3(0, 0, 0))
+dolly.position.set( -15, 0, 5 );
 scene.add(dolly);
 
 const camera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 1, 20000 );
 camera.position.set(0, 1, 0);
 dolly.add( camera );
+dolly.rotation.y = - Math.PI / 2;
 
 // Effect and Controls for VR, Initialize the WebVR manager
 const effect = new THREE.VREffect( renderer );
@@ -73,9 +72,6 @@ function onWindowResize () {
 
 };
 
-
-//dolly.rotation.y += Math.PI;
-//let rot = 0;
 function animate ( time ) {
 
   requestAnimationFrame( animate );
@@ -83,8 +79,10 @@ function animate ( time ) {
   controls.update();
 
   dolly.rotation.y -= keys.rot() * ( speed * 0.12 );
-  dolly.translateX( keys.x() * speed );
-  dolly.translateZ( keys.y() * speed );
+  dolly.translateZ( -keys.x() * speed );
+  dolly.translateX( keys.y() * speed );
+
+  dolly.translateY( keys.vert() * (speed * 0.5) );
 
   var direction = new THREE.Vector3( 0, 0, -1 ).transformDirection( camera.matrixWorld );
   var raycaster = new THREE.Raycaster( dolly.position, direction, 0, 10 );
@@ -95,7 +93,8 @@ function animate ( time ) {
     const sign = intersects[0].object.parent;
     if ( sign && sign._data ) {
 
-      sign.scale.x = 1 + ((Math.sin(Date.now() / 1000) + 1) * 0.03);
+      sign.scale.x = 1 + ( ( Math.sin( Date.now() / 1000 ) + 1 ) * 0.03 );
+
       if ( keys.enter() ) {
 
         const title = sign._data.title;
@@ -105,14 +104,10 @@ function animate ( time ) {
           const { x, z } = dolly.position;
 
           World.loadSub( sub, x, z );
-          //World.findRelatedSubs( sub , x, z );
           keys.enter(true);
 
         }
         sign.parent.remove(sign);
-
-        //World.mesh.remove(intersects[0].object);
-        //intersects[0].object.parent.remove(intersects[0].object);
 
       }
 

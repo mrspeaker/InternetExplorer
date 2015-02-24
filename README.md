@@ -10,6 +10,8 @@ Base code (Stuff in /lib: VRManager, VREffect etc) is from the [Sechelt demo](ht
 
 type "/" to enter text mode (no gui yet!). Type a subreddit and hit enter, it will load any imgurlses.
 
-hit "space" to remove an obelisk.
-hit "enter" to load a "/r/..." oblisk.
-
+Q/E: up n down
+wasd: directions
+arrows: rotation
+"space" to remove an obelisk.
+"enter" to load a "/r/..." oblisk.

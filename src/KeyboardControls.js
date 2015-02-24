@@ -60,9 +60,17 @@ class KeyboardControls {
 
   }
 
+  vert () {
+
+    const up = this._keys[ 81 ] ? 1 : 0;
+    const down = this._keys[ 69 ] ? 1 : 0;
+    return -up + down;
+
+  }
+
   x () {
 
-    const left = ( this._keys[ 81 ] || this._keys[ 65 ] ) ? 1 : 0;
+    const left = ( this._keys[ 65 ] ) ? 1 : 0;
     const right = this._keys[ 68 ] ? 1 : 0;
     return -left + right;
 
