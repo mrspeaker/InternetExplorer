@@ -26,9 +26,29 @@ class KeyboardControls {
 
   }
 
-  action () {
+  action ( release ) {
+
+    if ( release ) {
+
+      this._keys[ 32 ] = false;
+      return;
+
+    }
 
     return this._keys[ 32 ];
+
+  }
+
+  enter (release) {
+
+    if ( release ) {
+
+      this._keys[ 13 ] = false;
+      return;
+
+    }
+
+    return this._keys[ 13 ];
 
   }
 

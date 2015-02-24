@@ -21,14 +21,21 @@ world.add( imgMesh );
 
 const positionSigns = ( signs, x, z ) => {
 
-  return signs.map ( sign => {
+  const placer = new THREE.Object3D();
+  placer.position.set(x, 1, z);
+  placer.rotation.y = Math.random() * Math.PI;
+
+  return signs.map ( (sign, i) => {
+    sign.position.copy(placer.position);
     sign.position.set(
       35 - (Math.random() * 70) + x,
       1,
       35 - (Math.random() * 70) + z
     );
-
+    //sign.rotation.y = rotation - Math.PI / 2;// ( Math.PI / 2 ) + ( Math.random() * Math.PI );
     sign.rotation.y = ( Math.PI / 2 ) + ( Math.random() * Math.PI );
+
+    //placer.translateZ(6);
 
     return sign;
 
@@ -70,7 +77,7 @@ const findRelatedSubs = ( subReddit, x = 0, z = 0 ) => {
 
 }
 
-const subs = ["aww", "pics", "funny", "mildlyinteresting", "EarthPorn"];
+const subs = ["pics"]//"aww", "pics", "funny", "mildlyinteresting", "EarthPorn"];
 
 loadSub(subs[ Math.random() * subs.length | 0 ]);
 

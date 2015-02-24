@@ -3,9 +3,10 @@ import KeyboardFieldInput from "./KeyboardFieldInput";
 import World from "./world/World";
 
 const keys = new KeyboardControls();
+
 const field = new KeyboardFieldInput( (prog, done) => {
 
-  if (done) {
+  if (done && prog) {
 
     console.log( "Loading sub:", done );
     const { x, z } = dolly.position;
@@ -44,6 +45,8 @@ const manager = new WebVRManager( effect );
 
 // lights
 {
+  const amb = new THREE.AmbientLight(0x111111);
+  scene.add(amb);
 
   const directionalLight = new THREE.DirectionalLight( 0xffffff, 0.85 );
   directionalLight.position.set( -1, 1, -1 );
@@ -72,15 +75,53 @@ function onWindowResize () {
 
 
 //dolly.rotation.y += Math.PI;
+//let rot = 0;
 function animate ( time ) {
 
   requestAnimationFrame( animate );
 
   controls.update();
 
-  //dolly.quaternion.copy(camera.quaternion);
-  dolly.rotation.y -= keys.x() * ( speed * 0.12 );
-  dolly.translateX( -keys.y() * speed );
+  dolly.rotation.y -= keys.rot() * ( speed * 0.12 );
+  dolly.translateX( keys.x() * speed );
+  dolly.translateZ( keys.y() * speed );
+
+  var direction = new THREE.Vector3( 0, 0, -1 ).transformDirection( camera.matrixWorld );
+  var raycaster = new THREE.Raycaster( dolly.position, direction, 0, 10 );
+
+  var intersects = raycaster.intersectObjects( World.mesh.children, true );
+  if (intersects.length) {
+
+    const sign = intersects[0].object.parent || intersects[0].object;
+    sign.scale.x = 1 + ((Math.sin(Date.now() / 1000) + 1) * 0.03);
+    if ( keys.enter() ) {
+
+      const title = sign._data.title;
+      if (title && title.match(/\/r\/[a-zA-Z]+$/g)) {
+
+        const sub = title.slice(3);
+        const { x, z } = dolly.position;
+
+        World.loadSub( sub, x, z );
+        World.findRelatedSubs( sub , x, z );
+        keys.enter(true);
+
+      }
+      sign.parent.remove(sign);
+
+      //World.mesh.remove(intersects[0].object);
+      //intersects[0].object.parent.remove(intersects[0].object);
+
+    }
+
+    if ( keys.action() ) {
+
+      sign.parent.remove(sign);
+      keys.action(true);
+
+    }
+
+  }
 
   if ( manager.isVRMode() ) {
 
