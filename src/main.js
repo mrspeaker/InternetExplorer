@@ -12,7 +12,7 @@ const field = new KeyboardFieldInput( (prog, done) => {
     const { x, z } = dolly.position;
 
     World.loadSub( prog, x, z );
-    World.findRelatedSubs( prog , x, z );
+    //World.findRelatedSubs( prog , x, z );
 
   }
 
@@ -92,32 +92,36 @@ function animate ( time ) {
   var intersects = raycaster.intersectObjects( World.mesh.children, true );
   if (intersects.length) {
 
-    const sign = intersects[0].object.parent || intersects[0].object;
-    sign.scale.x = 1 + ((Math.sin(Date.now() / 1000) + 1) * 0.03);
-    if ( keys.enter() ) {
+    const sign = intersects[0].object.parent;
+    if ( sign && sign._data ) {
 
-      const title = sign._data.title;
-      if (title && title.match(/\/r\/[a-zA-Z]+$/g)) {
+      sign.scale.x = 1 + ((Math.sin(Date.now() / 1000) + 1) * 0.03);
+      if ( keys.enter() ) {
 
-        const sub = title.slice(3);
-        const { x, z } = dolly.position;
+        const title = sign._data.title;
+        if (title && title.match(/\/r\/[a-zA-Z]+$/g)) {
 
-        World.loadSub( sub, x, z );
-        World.findRelatedSubs( sub , x, z );
-        keys.enter(true);
+          const sub = title.slice(3);
+          const { x, z } = dolly.position;
+
+          World.loadSub( sub, x, z );
+          //World.findRelatedSubs( sub , x, z );
+          keys.enter(true);
+
+        }
+        sign.parent.remove(sign);
+
+        //World.mesh.remove(intersects[0].object);
+        //intersects[0].object.parent.remove(intersects[0].object);
 
       }
-      sign.parent.remove(sign);
 
-      //World.mesh.remove(intersects[0].object);
-      //intersects[0].object.parent.remove(intersects[0].object);
+      if ( keys.action() ) {
 
-    }
+        sign.parent.remove(sign);
+        keys.action(true);
 
-    if ( keys.action() ) {
-
-      sign.parent.remove(sign);
-      keys.action(true);
+      }
 
     }
 

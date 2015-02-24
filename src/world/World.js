@@ -51,6 +51,8 @@ const loadSub = ( subReddit, x = 0, z = 0 ) => {
     .then( signs => positionSigns (signs, x, z) )
     .then( signs => signs.forEach( sign => world.add( sign ) ) );
 
+
+  findRelatedSubs( subReddit, x, z );
 }
 
 const findRelatedSubs = ( subReddit, x = 0, z = 0 ) => {
@@ -77,7 +79,7 @@ const findRelatedSubs = ( subReddit, x = 0, z = 0 ) => {
 
 }
 
-const subs = ["pics"]//"aww", "pics", "funny", "mildlyinteresting", "EarthPorn"];
+const subs = ["aww", "pics", "funny", "mildlyinteresting", "EarthPorn"];
 
 loadSub(subs[ Math.random() * subs.length | 0 ]);
 
