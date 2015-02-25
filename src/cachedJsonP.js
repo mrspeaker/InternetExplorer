@@ -3,7 +3,6 @@ import jsonp from "jsonp";
 const cachedJsonP = ( url, params, cb ) => {
 
   const key = "_jpcache";
-
   // localStorage.removeItem( key );
   const cache = JSON.parse( localStorage.getItem( key ) || "{}" );
 

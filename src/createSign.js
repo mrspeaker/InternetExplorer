@@ -1,10 +1,5 @@
 import Sign from "./world/Sign";
 
-const createSign = ( posts ) => posts.map( p => {
+let meshes = posts => posts.map( p => Sign( p.data.title, p.data.url ) );
 
-  const label = Sign( p.data.title, p.data.url );
-  return label;
-
-});
-
-export default createSign;
+export default meshes;
