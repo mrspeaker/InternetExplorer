@@ -1,7 +1,7 @@
 import RedditAPI from "../RedditAPI";
 import SkyBox from "./SkyBox";
 import ground from "./ground";
-import Oblisk from "./Oblisk";
+import Obelisk from "./Obelisk";
 import ImgUrMesh from "./ImgUrMesh";
 import Sign from "./Sign";
 import createSigns from "../createSign";
@@ -10,7 +10,7 @@ const world = new THREE.Group();
 world.add( SkyBox() );
 world.add( ground );
 
-const ob = Oblisk();
+const ob = Obelisk();
 ob.position.set( 0, 5, 10 );
 world.add( ob );
 

@@ -1,13 +1,13 @@
 import createCanvasPlane from "../createCanvasPlane";
 import wrapCanvasText from "../wrapCanvasText";
 import ImgUrMesh from "./ImgUrMesh";
-import Oblisk from "./Oblisk";
+import Obelisk from "./Obelisk";
 
 const Sign = ( title = "title", url ) => {
 
   const group = new THREE.Group();
 
-  const ob = Oblisk( 6, 9, 0.5 );
+  const ob = Obelisk( 6, 9, 0.5 );
   ob.position.set( 0, 2, 0 )
   group.add( ob );
 
