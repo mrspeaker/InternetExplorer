@@ -79,15 +79,41 @@ function animate ( time ) {
   controls.update();
 
   dolly.rotation.y -= keys.rot() * ( speed * 0.12 );
-  dolly.translateX( keys.x() * speed );
-  dolly.translateZ( keys.y() * speed );
+
+  if ( manager.isVRMode() ) {
+
+    dolly.translateZ( keys.x() * speed );
+    dolly.translateX( -keys.y() * speed );
+
+  } else {
+
+    dolly.translateX( keys.x() * speed );
+    dolly.translateZ( keys.y() * speed );
+
+  }
 
   dolly.translateY( keys.vert() * (speed * 0.5) );
 
-  var direction = new THREE.Vector3( 0, 0, -1 ).transformDirection( camera.matrixWorld );
-  var raycaster = new THREE.Raycaster( dolly.position, direction, 0, 10 );
+  whatAreYouLookingAt();
 
-  var intersects = raycaster.intersectObjects( World.mesh.children, true );
+  if ( manager.isVRMode() ) {
+
+    effect.render( scene, camera );
+
+  } else {
+
+    renderer.render( scene, camera );
+
+  }
+
+}
+
+const whatAreYouLookingAt = () => {
+
+  const direction = new THREE.Vector3( 0, 0, -1 ).transformDirection( camera.matrixWorld );
+  const raycaster = new THREE.Raycaster( dolly.position, direction, 0, 10 );
+  const intersects = raycaster.intersectObjects( World.mesh.children, true );
+
   if (intersects.length) {
 
     const sign = intersects[ 0 ].object.parent;
@@ -119,16 +145,6 @@ function animate ( time ) {
       }
 
     }
-
-  }
-
-  if ( manager.isVRMode() ) {
-
-    effect.render( scene, camera );
-
-  } else {
-
-    renderer.render( scene, camera );
 
   }
 
