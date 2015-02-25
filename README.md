@@ -1,10 +1,10 @@
 # Worldt
 
-Made for Oculus, so needs a browser with Oculus support - see [MozVR.com](http://www.mozvr.com).
+Reddit ImgUr world. Made for Oculus Rift: so needs a browser with Oculus support - see [MozVR.com](http://www.mozvr.com).
 
 **Controls:**
 
-type "/" to enter text mode (no gui yet!). Type a subreddit and hit enter, it will load any imgurlses.
+Type "/" to enter text mode (no gui yet - you have to type blindly!). Type a subreddit and hit enter, it will load any imgurls.
 
     WSAD: Move
     Arrows: Rotate
