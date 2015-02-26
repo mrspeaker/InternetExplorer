@@ -67,7 +67,7 @@ const manager = new WebVRManager( effect );
   const amb = new THREE.AmbientLight( 0x111111 );
   scene.add(amb);
 
-  const directionalLight = new THREE.DirectionalLight( 0xffffff, 0.85 );
+  const directionalLight = new THREE.DirectionalLight( 0xffffff, 0.35 );
   directionalLight.position.set( -1, 1, -1 );
   scene.add( directionalLight );
 
@@ -82,6 +82,17 @@ scene.add( World.mesh );
 requestAnimationFrame( animate );
 window.addEventListener( "resize", onWindowResize, false );
 onWindowResize();
+
+
+World.loadSub(
+  [ "aww", "pics", "funny", "mildlyinteresting" ][ Math.random() * 4 | 0 ],
+  dolly.position.x,
+  dolly.position.z,
+  dolly.rotation.y + Math.PI
+);
+
+dolly.translateZ( 20 );
+dolly.rotation.y -= 0.2;
 
 
 function onWindowResize () {
@@ -117,6 +128,8 @@ function animate ( time ) {
   }
 
   dolly.translateY( keys.vert() * (speed * 0.5) );
+
+  if (dolly.position.y < 0) dolly.position.y = 0;
 
   whatAreYouLookingAt();
 

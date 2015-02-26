@@ -12,11 +12,15 @@ world.add( SkyBox() );
 world.add( ground );
 
 const ob = Obelisk();
-ob.position.set( 0, 5, 10 );
+ob.scale.y = 0.5;
+ob.position.set( -20, 3.5, 18 );
+ob.rotation.y = Math.PI / 4;
 world.add( ob );
 
 const imgMesh = ImgUrMesh( "dAvWkN8.jpg" );
-imgMesh.position.set( 0, 5, 9.3 );
+imgMesh.position.copy( ob.position );
+imgMesh.rotation.y = ob.rotation.y;
+imgMesh.translateZ( -0.55)
 world.add( imgMesh );
 
 const positionSigns = ( signs, x, z, rot ) => {
@@ -31,7 +35,7 @@ const positionSigns = ( signs, x, z, rot ) => {
     sign.position.copy( placer.position );
     sign.translateZ( -9 );
 
-    placer.translateZ( 4 );
+    placer.translateZ( 3.5 );
 
     return sign;
 
@@ -66,7 +70,7 @@ const findRelatedSubs = ( subReddit, x = 0, z = 0, rot ) => RedditAPI
       .filter( ( value, index, self ) => self.indexOf( value ) === index )
   )
   .then( related => related.map( sub => Sign( sub ) ) )
-  .then( positionSigns( signs, x, z, rot ) )
+  .then( signs => positionSigns( signs, x, z, rot ) )
   .then( signs => signs.map( sign => {
 
     sign.position.y = -3;
@@ -74,10 +78,6 @@ const findRelatedSubs = ( subReddit, x = 0, z = 0, rot ) => RedditAPI
 
   }))
   .then( signs => signs.map( sign => world.add( sign ) ) )
-
-const subs = [ "aww", "pics", "funny", "mildlyinteresting" ];
-
-loadSub( subs[ Math.random() * subs.length | 0 ] );
 
 const loadText = createCanvasPlane( 256, 60, ( ctx, w, h ) => {
 
