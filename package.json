@@ -1,7 +1,8 @@
 {
   "jspm": {
     "dependencies": {
-      "jsonp": "npm:jsonp@^0.1.0"
+      "jsonp": "npm:jsonp@^0.1.0",
+      "stats-js": "npm:stats-js@^1.0.0-alpha1"
     }
   }
 }

@@ -5,6 +5,7 @@ import Obelisk from "./Obelisk";
 import ImgUrMesh from "./ImgUrMesh";
 import Sign from "./Sign";
 import createSigns from "../createSign";
+import createCanvasPlane from "../createCanvasPlane";
 
 const world = new THREE.Group();
 world.add( SkyBox() );
@@ -82,7 +83,18 @@ const subs = [ "aww", "pics", "funny", "mildlyinteresting" ];
 
 loadSub( subs[ Math.random() * subs.length | 0 ] );
 
+const loadText = createCanvasPlane( 256, 256, ( ctx, w, h ) => {
+
+  ctx.font = "22pt Helvetica";
+  ctx.fillStyle = "rgba(255, 255, 255, 0.8)";
+  ctx.fillText( "Hit 'enter' to load.", 0, 30 );
+
+});
+loadText.position.set( 3, -10, 3 );
+world.add( loadText );
+
 export default {
   loadSub,
-  mesh: world
+  mesh: world,
+  loadText
 };

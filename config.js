@@ -12,6 +12,7 @@ System.config({
 System.config({
   "map": {
     "jsonp": "npm:jsonp@0.1.0",
+    "stats-js": "npm:stats-js@1.0.0-alpha1",
     "github:jspm/nodelibs-process@0.1.1": {
       "process": "npm:process@0.10.0"
     },

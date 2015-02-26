@@ -24,7 +24,7 @@ const Sign = ( title = "title", url ) => {
     title
   };
 
-  if ( url && url.indexOf( "imgur.com" ) >= 0 ) {
+  if ( !window.debug && url && url.indexOf( "imgur.com" ) >= 0 ) {
 
     if ( url.endsWith( ".gifv" ) ) {
 

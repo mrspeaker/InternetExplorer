@@ -1,12 +1,21 @@
 import KeyboardControls from "./KeyboardControls";
 import KeyboardFieldInput from "./KeyboardFieldInput";
 import World from "./world/World";
+import Stats from "stats-js";
+
+window.debug = false;
 
 const keys = new KeyboardControls();
+const field = new KeyboardFieldInput( ( prog, done ) => {
 
-const field = new KeyboardFieldInput( (prog, done) => {
+  if ( done && prog ) {
 
-  if (done && prog) {
+    if ( prog === "prod" ) {
+
+      window.debug = !window.debug;
+      return;
+
+    }
 
     console.log( "Loading sub:", done );
     const { x, z } = dolly.position;
@@ -18,6 +27,17 @@ const field = new KeyboardFieldInput( (prog, done) => {
 });
 
 const speed = 0.2;
+
+const stats = new Stats();
+{
+  const dom = stats.domElement;
+  const style = dom.style;
+  stats.setMode( 0 );
+  style.position = "absolute";
+  style.left = "0px";
+  style.top = "0px";
+  document.body.appendChild( dom );
+}
 
 const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.autoClear = false;
@@ -44,7 +64,7 @@ const manager = new WebVRManager( effect );
 
 // lights
 {
-  const amb = new THREE.AmbientLight(0x111111);
+  const amb = new THREE.AmbientLight( 0x111111 );
   scene.add(amb);
 
   const directionalLight = new THREE.DirectionalLight( 0xffffff, 0.85 );
@@ -74,18 +94,22 @@ function onWindowResize () {
 
 function animate ( time ) {
 
+  stats.begin();
+
+
   requestAnimationFrame( animate );
+
 
   controls.update();
 
   dolly.rotation.y -= keys.rot() * ( speed * 0.12 );
 
-  if ( manager.isVRMode() ) {
+  /*if ( manager.isVRMode() ) {
 
-    dolly.translateZ( keys.x() * speed );
-    dolly.translateX( -keys.y() * speed );
+    dolly.translateX( keys.x() * speed );
+    dolly.translateZ( keys.y() * speed );
 
-  } else {
+  } else */{
 
     dolly.translateX( keys.x() * speed );
     dolly.translateZ( keys.y() * speed );
@@ -105,6 +129,8 @@ function animate ( time ) {
     renderer.render( scene, camera );
 
   }
+
+  stats.end();
 
 }
 
