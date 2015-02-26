@@ -3,7 +3,7 @@ import KeyboardFieldInput from "./KeyboardFieldInput";
 import World from "./world/World";
 import Stats from "stats-js";
 
-window.debug = false;
+window.debug = true;
 
 const keys = new KeyboardControls();
 const field = new KeyboardFieldInput( ( prog, done ) => {
@@ -145,20 +145,29 @@ const whatAreYouLookingAt = () => {
     const sign = intersects[ 0 ].object.parent;
     if ( sign && sign._data ) {
 
+      const title = sign._data.title
+      const isSubReddit = title.match( /\/r\/[a-zA-Z]+$/g )
+
       sign.scale.x = 1 + ( ( Math.sin( Date.now() / 1000 ) + 1 ) * 0.03 );
 
-      if ( keys.enter() ) {
+      if (isSubReddit) {
 
-        const title = sign._data.title;
-        if ( title && title.match( /\/r\/[a-zA-Z]+$/g ) ) {
+        const text = World.loadText;
+        text.position.copy(sign.position);
+        text.rotation.copy(sign.rotation);
+        text.translateZ(1);
+        text.position.y = 2.8;
 
-          const sub = title.slice( 3 );
-          const { x, z } = dolly.position;
+      }
 
-          World.loadSub( sub, x, z );
-          keys.enter( true );
+      if ( keys.enter() && isSubReddit ) {
 
-        }
+        const sub = title.slice( 3 );
+        const { x, z } = dolly.position;
+
+        World.loadSub( sub, x, z );
+        keys.enter( true );
+
         sign.parent.remove( sign );
 
       }

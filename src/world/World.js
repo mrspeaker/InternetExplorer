@@ -56,7 +56,7 @@ const loadSub = ( subReddit, x = 0, z = 0 ) => RedditAPI
   } ) )
   .then( signs => {
 
-    const { x, z } = signs[ signs.length - 1 ].position;
+    const { x, z } = signs[ 0 ] .position //signs.length - 1 ].position;
     findRelatedSubs( subReddit, x, z );
 
   });
@@ -83,11 +83,14 @@ const subs = [ "aww", "pics", "funny", "mildlyinteresting" ];
 
 loadSub( subs[ Math.random() * subs.length | 0 ] );
 
-const loadText = createCanvasPlane( 256, 256, ( ctx, w, h ) => {
+const loadText = createCanvasPlane( 256, 60, ( ctx, w, h ) => {
 
+  ctx.textAlign = "center";
+  ctx.fillStyle = "#222";
+  ctx.fillRect(0, 0, w, h);
   ctx.font = "22pt Helvetica";
   ctx.fillStyle = "rgba(255, 255, 255, 0.8)";
-  ctx.fillText( "Hit 'enter' to load.", 0, 30 );
+  ctx.fillText( "Hit 'enter' to load.", w / 2, 30 );
 
 });
 loadText.position.set( 3, -10, 3 );
