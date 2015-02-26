@@ -19,24 +19,19 @@ const imgMesh = ImgUrMesh( "dAvWkN8.jpg" );
 imgMesh.position.set( 0, 5, 9.3 );
 world.add( imgMesh );
 
-const positionSigns = ( signs, x, z ) => {
+const positionSigns = ( signs, x, z, rot ) => {
 
   const placer = new THREE.Object3D();
   placer.position.set( x, 1, z );
-  placer.rotation.y = Math.random() * Math.PI;
+  placer.rotation.y = rot !== undefined ? rot : Math.random() * (2 * Math.PI);
 
-  return signs.map ( (sign, i) => {
+  return signs.map ( ( sign, i ) => {
+
+    sign.rotation.y = placer.rotation.y + ((i % 2 === 0 ? -1 : 1) * Math.PI / 2);
     sign.position.copy( placer.position );
-    /*sign.position.set(
-      35 - ( Math.random() * 70 ) + x,
-      1,
-      35 - ( Math.random() * 70 ) + z
-    );*/
+    sign.translateZ( -9 );
 
-    sign.rotation.y = placer.rotation.y - Math.PI / 2;
-    //sign.rotation.y = ( Math.PI / 2 ) + ( Math.random() * Math.PI );
-
-    placer.translateZ(6);
+    placer.translateZ( 4 );
 
     return sign;
 
@@ -44,10 +39,10 @@ const positionSigns = ( signs, x, z ) => {
 
 }
 
-const loadSub = ( subReddit, x = 0, z = 0 ) => RedditAPI
+const loadSub = ( subReddit, x = 0, z = 0, rot ) => RedditAPI
   .load( subReddit )
   .then( createSigns )
-  .then( signs => positionSigns( signs, x, z ) )
+  .then( signs => positionSigns( signs, x, z, rot ) )
   .then( signs => signs.map( sign => {
 
     world.add( sign );
@@ -55,13 +50,14 @@ const loadSub = ( subReddit, x = 0, z = 0 ) => RedditAPI
 
   } ) )
   .then( signs => {
-
-    const { x, z } = signs[ 0 ] .position //signs.length - 1 ].position;
-    findRelatedSubs( subReddit, x, z );
+    rot = rot == undefined ? 0 : rot;
+    rot += (Math.random () < 0.5 ? -1 : 1) * (Math.PI / 4);
+    const { x, z } = signs[ signs.length - 1 ].position;
+    findRelatedSubs( subReddit, x, z, rot );
 
   });
 
-const findRelatedSubs = ( subReddit, x = 0, z = 0 ) => RedditAPI
+const findRelatedSubs = ( subReddit, x = 0, z = 0, rot ) => RedditAPI
   .loadAboutSub( subReddit )
   .then(
     about => about.description
@@ -70,7 +66,7 @@ const findRelatedSubs = ( subReddit, x = 0, z = 0 ) => RedditAPI
       .filter( ( value, index, self ) => self.indexOf( value ) === index )
   )
   .then( related => related.map( sub => Sign( sub ) ) )
-  .then( signs => positionSigns( signs, x, z ) )
+  .then( positionSigns( signs, x, z, rot ) )
   .then( signs => signs.map( sign => {
 
     sign.position.y = -3;

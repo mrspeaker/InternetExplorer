@@ -1,5 +1,5 @@
 import Sign from "./world/Sign";
 
-let meshes = posts => posts.map( p => Sign( p.data.title, p.data.url ) );
+const meshes = posts => posts.map( ({ data }) => Sign( data.title, data.url ) );
 
 export default meshes;

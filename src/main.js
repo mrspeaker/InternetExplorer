@@ -3,7 +3,7 @@ import KeyboardFieldInput from "./KeyboardFieldInput";
 import World from "./world/World";
 import Stats from "stats-js";
 
-window.debug = true;
+window.debug = false;
 
 const keys = new KeyboardControls();
 const field = new KeyboardFieldInput( ( prog, done ) => {
@@ -20,7 +20,7 @@ const field = new KeyboardFieldInput( ( prog, done ) => {
     console.log( "Loading sub:", done );
     const { x, z } = dolly.position;
 
-    World.loadSub( prog, x, z );
+    World.loadSub( prog, x, z, dolly.rotation.y + Math.PI);
 
   }
 
@@ -109,7 +109,7 @@ function animate ( time ) {
     dolly.translateX( keys.x() * speed );
     dolly.translateZ( keys.y() * speed );
 
-  } else */{
+  } else */ {
 
     dolly.translateX( keys.x() * speed );
     dolly.translateZ( keys.y() * speed );
@@ -150,12 +150,12 @@ const whatAreYouLookingAt = () => {
 
       sign.scale.x = 1 + ( ( Math.sin( Date.now() / 1000 ) + 1 ) * 0.03 );
 
-      if (isSubReddit) {
+      if ( isSubReddit ) {
 
         const text = World.loadText;
-        text.position.copy(sign.position);
-        text.rotation.copy(sign.rotation);
-        text.translateZ(1);
+        text.position.copy( sign.position );
+        text.rotation.copy( sign.rotation );
+        text.translateZ( 1 );
         text.position.y = 2.8;
 
       }
@@ -165,7 +165,7 @@ const whatAreYouLookingAt = () => {
         const sub = title.slice( 3 );
         const { x, z } = dolly.position;
 
-        World.loadSub( sub, x, z );
+        World.loadSub( sub, x, z, sign.rotation.y + Math.PI );
         keys.enter( true );
 
         sign.parent.remove( sign );
