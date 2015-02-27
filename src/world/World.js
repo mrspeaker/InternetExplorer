@@ -29,12 +29,18 @@ const positionSigns = ( signs, x, z, rot ) => {
   placer.position.set( x, 1, z );
   placer.rotation.y = rot !== undefined ? rot : Math.random() * (2 * Math.PI);
 
+  const off = Math.random() * 2 - 1;
+  const dir = Math.random() < 0.5 ? Math.sin : Math.cos
+  const dist = (Math.random() * 13 | 0) + 5;
+  console.log(dir === Math.sin)
+
   return signs.map ( ( sign, i ) => {
 
     sign.rotation.y = placer.rotation.y + ((i % 2 === 0 ? -1 : 1) * Math.PI / 2);
     sign.position.copy( placer.position );
     sign.translateZ( -9 );
 
+    placer.translateX( dir((off + i) / dist) * 0.7)
     placer.translateZ( 3.5 );
 
     return sign;

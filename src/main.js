@@ -27,6 +27,20 @@ const field = new KeyboardFieldInput( ( prog, done ) => {
 });
 
 const speed = 0.2;
+const moves = {
+  vx: 0.0,
+  vz: 0.0,
+  ax: 0.0,
+  az: 0.0,
+
+  vrot: 0.0,
+  arot: 0.0,
+
+  power: 0.01,
+  rotPower: 0.0025,
+  drag: 0.95
+};
+
 
 const stats = new Stats();
 {
@@ -45,7 +59,7 @@ renderer.setClearColor( 0x222222 );
 document.body.appendChild( renderer.domElement );
 
 const scene = new THREE.Scene();
-scene.fog = new THREE.Fog( 0x000000, 0, 100 );
+scene.fog = new THREE.Fog( 0x000000, 0, 350 );
 
 const dolly = new THREE.Group();
 dolly.position.set( -15, 0, 5 );
@@ -60,7 +74,7 @@ dolly.rotation.y = - Math.PI / 2;
 const effect = new THREE.VREffect( renderer );
 const controls = new THREE.VRControls( camera );
 const manager = new WebVRManager( effect );
-//controls.zeroSensor();
+window.controls = controls//.zeroSensor();
 
 // lights
 {
@@ -113,7 +127,11 @@ function animate ( time ) {
 
   controls.update();
 
-  dolly.rotation.y -= keys.rot() * ( speed * 0.12 );
+  moves.arot = keys.rot() * moves.rotPower;
+  moves.vrot += moves.arot;
+  moves.vrot *= moves.drag;
+
+  dolly.rotation.y -= moves.vrot;
 
   /*if ( manager.isVRMode() ) {
 
@@ -121,9 +139,17 @@ function animate ( time ) {
     dolly.translateZ( keys.y() * speed );
 
   } else */ {
+    moves.ax = keys.x() * moves.power;
+    moves.az = keys.y() * moves.power;
 
-    dolly.translateX( keys.x() * speed );
-    dolly.translateZ( keys.y() * speed );
+    moves.vx += moves.ax;
+    moves.vz += moves.az;
+
+    moves.vx *= moves.drag;
+    moves.vz *= moves.drag;
+
+    dolly.translateX( moves.vx );
+    dolly.translateZ( moves.vz );
 
   }
 
