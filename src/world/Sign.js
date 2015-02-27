@@ -7,8 +7,8 @@ const Sign = ( title = "title", url ) => {
 
   const group = new THREE.Group();
 
-  const ob = Obelisk( 6, 9, 0.5 );
-  ob.position.set( 0, 2, 0 )
+  const ob = Obelisk( 6, 7, 0.5 );
+  ob.position.set( 0, 3.5, 0 )
   group.add( ob );
 
   const text = createCanvasPlane( 256, 256, ( ctx, w, h ) => {
@@ -18,7 +18,7 @@ const Sign = ( title = "title", url ) => {
     wrapCanvasText( ctx, title, 0, 30, w, 30 );
 
   });
-  text.position.set( 0, 4.1, 0.28 );
+  text.position.set( 0, 5, 0.28 );
   group.add( text );
   group._data = {
     title
@@ -44,7 +44,7 @@ const Sign = ( title = "title", url ) => {
     if ( url.startsWith( "https://imgur" ) ) url = "https://i." + url.slice( 8 );
 
     const img = ImgUrMesh( url );
-    img.position.set( 0, 1.5, 0.29 );
+    img.position.set( 0, 2.5, 0.29 );
     group.add( img );
 
   }

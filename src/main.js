@@ -1,11 +1,13 @@
 import KeyboardControls from "./KeyboardControls";
 import KeyboardFieldInput from "./KeyboardFieldInput";
+import createCanvasPlane from "./createCanvasPlane";
+import TextLinePlane from "./TextLinePlane";
 import World from "./world/World";
 import Stats from "stats-js";
-import createCanvasPlane from "./createCanvasPlane";
-
+import Cloud from "./world/Cloud";
 
 window.debug = false;
+
 let showTypeBox = false;
 
 const keys = new KeyboardControls();
@@ -24,16 +26,17 @@ const field = new KeyboardFieldInput( ( prog, done ) => {
 
     }
 
-    const { x, z } = dolly.position;
+    const { x, y, z } = dolly.position;
 
-    World.loadSub( prog, x, z, dolly.rotation.y + Math.PI);
+    World.load( prog, {x, y, z}, dolly.rotation.y + Math.PI);
 
   } else {
 
       showTypeBox = true;
-      scene.remove(t);
-      t = TypeText("/" + (prog ? prog : ""));
-      scene.add(t);
+      scene.remove(typeyText);
+      typeyText = TextLinePlane("/" + (prog ? prog : ""));
+      typeyText.scale.set(0.005, 0.005, 0.005);
+      scene.add(typeyText);
 
   }
 
@@ -68,14 +71,26 @@ const stats = new Stats();
 const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.autoClear = false;
 renderer.setClearColor( 0x222222 );
+renderer.shadowMapEnabled = true;
+
 document.body.appendChild( renderer.domElement );
 
 const scene = new THREE.Scene();
-scene.fog = new THREE.Fog( 0x000000, 0, 350 );
+scene.fog = new THREE.Fog( 0x001F4B, 20, 200 );
 
 const dolly = new THREE.Group();
-dolly.position.set( -15, 0, 5 );
+dolly.position.set( -15, 0.4, 5 );
 scene.add(dolly);
+
+const clouds = new Array(100)
+  .fill(true)
+  .map( () => Cloud.make({
+    x: Math.random() * 1000 - 500,
+    y: 40,
+    z: Math.random() * 1000 - 500
+  }) )
+
+clouds.forEach(c => scene.add( c ));
 
 const camera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 1, 20000 );
 camera.position.set(0, 1, 0);
@@ -89,16 +104,47 @@ const manager = new WebVRManager( effect );
 
 // lights
 {
-  const amb = new THREE.AmbientLight( 0x111111 );
+  /*const amb = new THREE.AmbientLight( 0x222222 );
   scene.add(amb);
 
-  const directionalLight = new THREE.DirectionalLight( 0xffffff, 0.35 );
-  directionalLight.position.set( -1, 1, -1 );
+  const directionalLight = new THREE.DirectionalLight( 0xff0000, 0.85 );
+  directionalLight.position.set( 0, 2, 0 );
   scene.add( directionalLight );
 
-  const pointy = new THREE.PointLight( 0x0044ee, 0, 30 );
+
+  const hemiLight = new THREE.HemisphereLight( 0x0000ff, 0x00ff00, 0.6 );
+  scene.add( hemiLight );
+  / *const pointy = new THREE.PointLight( 0xff44ee, 0, 30 );
   pointy.position.set( 0, -2, 0 );
-  dolly.add( pointy );
+  dolly.add( pointy );*/
+
+  var hemiLight = new THREE.HemisphereLight( 0xFFF5CE, 0xffffff, 0.6 );
+  hemiLight.position.set( 0, 100, 0 );
+  scene.add( hemiLight );
+
+  var dirLight = new THREE.DirectionalLight( 0xffffff, 1 );
+  dirLight.position.set( 0, 0.75, 1.5 );
+  dirLight.position.multiplyScalar(50);
+  dirLight.castShadow = true;
+  dirLight.shadowCameraVisible = true;
+
+  var d = 300;
+
+  /*dirLight.shadowCameraLeft = -d;
+  dirLight.shadowCameraRight = d;
+  dirLight.shadowCameraTop = d;
+  dirLight.shadowCameraBottom = -d;
+  */
+  //dirLight.shadowCameraFar = 3500;
+  //dirLight.shadowBias = -0.0001;
+  dirLight.shadowCameraRight     = 15;
+  dirLight.shadowCameraLeft     = -5;
+  dirLight.shadowCameraTop      =  5;
+  dirLight.shadowCameraBottom   = -5;
+  dirLight.shadowDarkness = 0.35;
+
+  scene.add( dirLight );
+
 
 }
 
@@ -121,28 +167,12 @@ const loadText = createCanvasPlane( 256, 60, ( ctx, w, h ) => {
 loadText.position.set( 3, -10, 3 );
 scene.add( loadText );
 
-const TypeText = (text) => {
-  const plane = createCanvasPlane( 256, 60, ( ctx, w, h ) => {
+let typeyText = TextLinePlane("/");
+scene.add( typeyText );
 
-    ctx.textAlign = "center";
-    ctx.fillStyle = "#225";
-    ctx.fillRect(0, 0, w, h);
-    ctx.font = "22pt Helvetica";
-    ctx.fillStyle = "rgb(255, 255, 255)";
-    ctx.fillText( text, w / 2, 30 );
-
-  });
-  plane.scale.set(0.005, 0.005, 0.005);
-  return plane;
-}
-let t = TypeText("Type");
-t.position.set( 3, 1, 3 );
-scene.add( t );
-
-World.loadSub(
+World.load(
   [ "aww", "pics", "funny", "mildlyinteresting" ][ Math.random() * 4 | 0 ],
-  dolly.position.x,
-  dolly.position.z,
+  { x: dolly.position.x, y: 0, z: dolly.position.z },
   dolly.rotation.y + Math.PI
 );
 
@@ -168,34 +198,26 @@ function animate ( time ) {
 
   controls.update();
 
+  // Rotation
   moves.arot = keys.rot() * moves.rotPower;
   moves.vrot += moves.arot;
   moves.vrot *= moves.drag;
 
   dolly.rotation.y -= moves.vrot;
 
-  /*if ( manager.isVRMode() ) {
+  // Movement
+  moves.ax = keys.x() * moves.power;
+  moves.az = keys.y() * moves.power;
+  moves.vx += moves.ax;
+  moves.vz += moves.az;
+  moves.vx *= moves.drag;
+  moves.vz *= moves.drag;
 
-    dolly.translateX( keys.x() * speed );
-    dolly.translateZ( keys.y() * speed );
+  dolly.translateX( moves.vx );
+  dolly.translateZ( moves.vz );
+  dolly.translateY( keys.vert() * (moves.power * 3.5) );
 
-  } else */ {
-    moves.ax = keys.x() * moves.power;
-    moves.az = keys.y() * moves.power;
-
-    moves.vx += moves.ax;
-    moves.vz += moves.az;
-
-    moves.vx *= moves.drag;
-    moves.vz *= moves.drag;
-
-    dolly.translateX( moves.vx );
-    dolly.translateZ( moves.vz );
-
-  }
-
-  dolly.translateY( keys.vert() * (moves.power * 3) );
-
+  // Stay above ground
   if (dolly.position.y < 0) dolly.position.y = 0;
 
   if ( keys.zero() ) {
@@ -208,14 +230,14 @@ function animate ( time ) {
 
   if ( showTypeBox ) {
 
-    t.position.copy(dolly.position);
-    t.rotation.copy(dolly.rotation);
-    t.translateZ(-2);
-    t.translateY(1.5);
+    typeyText.position.copy( dolly.position );
+    typeyText.rotation.copy( dolly.rotation );
+    typeyText.translateZ( -2 );
+    typeyText.translateY( 1.5 );
 
   } else {
 
-    t.position.y = -10;
+    typeyText.position.y = -10;
 
   }
 
@@ -228,6 +250,8 @@ function animate ( time ) {
     renderer.render( scene, camera );
 
   }
+
+  clouds.forEach(c => Cloud.move( c ));
 
   stats.end();
 
@@ -254,7 +278,7 @@ const whatAreYouLookingAt = () => {
         loadText.position.copy( sign.position );
         loadText.rotation.copy( sign.rotation );
         loadText.translateZ( 1 );
-        loadText.position.y = 2.8;
+        loadText.position.y = 3.8;
 
       }
 
@@ -263,7 +287,7 @@ const whatAreYouLookingAt = () => {
         const sub = title.slice( 3 );
         const { x, z } = dolly.position;
 
-        World.loadSub( sub, x, z, sign.rotation.y + Math.PI );
+        World.load( sub, { x, y: sign.position.y, z }, sign.rotation.y + Math.PI );
         keys.enter( true );
 
         sign.parent.remove( sign );
@@ -279,6 +303,10 @@ const whatAreYouLookingAt = () => {
       }
 
     }
+
+  } else {
+
+    loadText.position.y = -10;
 
   }
 
