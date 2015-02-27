@@ -5,7 +5,6 @@ import Obelisk from "./Obelisk";
 import ImgUrMesh from "./ImgUrMesh";
 import Sign from "./Sign";
 import createSigns from "../createSign";
-import createCanvasPlane from "../createCanvasPlane";
 
 const world = new THREE.Group();
 world.add( SkyBox() );
@@ -32,7 +31,6 @@ const positionSigns = ( signs, x, z, rot ) => {
   const off = Math.random() * 2 - 1;
   const dir = Math.random() < 0.5 ? Math.sin : Math.cos
   const dist = (Math.random() * 13 | 0) + 5;
-  console.log(dir === Math.sin)
 
   return signs.map ( ( sign, i ) => {
 
@@ -71,7 +69,7 @@ const findRelatedSubs = ( subReddit, x = 0, z = 0, rot ) => RedditAPI
   .loadAboutSub( subReddit )
   .then(
     about => about.description
-      .match( /\/r\/[a-zA-Z]+/g )
+      .match( /\/r\/[a-zA-Z_]+/g )
       .map( sub => sub.toLowerCase() )
       .filter( ( value, index, self ) => self.indexOf( value ) === index )
   )
@@ -85,21 +83,7 @@ const findRelatedSubs = ( subReddit, x = 0, z = 0, rot ) => RedditAPI
   }))
   .then( signs => signs.map( sign => world.add( sign ) ) )
 
-const loadText = createCanvasPlane( 256, 60, ( ctx, w, h ) => {
-
-  ctx.textAlign = "center";
-  ctx.fillStyle = "#222";
-  ctx.fillRect(0, 0, w, h);
-  ctx.font = "22pt Helvetica";
-  ctx.fillStyle = "rgba(255, 255, 255, 0.8)";
-  ctx.fillText( "Hit 'enter' to load.", w / 2, 30 );
-
-});
-loadText.position.set( 3, -10, 3 );
-world.add( loadText );
-
 export default {
   loadSub,
-  mesh: world,
-  loadText
+  mesh: world
 };

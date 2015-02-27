@@ -14,7 +14,7 @@ const createCanvasPlane = function ( w, h, drawFunc ) {
 
   const material = new THREE.MeshBasicMaterial({
     map: texture,
-    // side: THREE.DoubleSide,
+    side: THREE.DoubleSide,
     transparent: true
   });
 

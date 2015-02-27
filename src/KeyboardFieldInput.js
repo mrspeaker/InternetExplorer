@@ -33,6 +33,7 @@ class KeyboardFieldInput {
 
         this.phrase = "";
         this.collecting = true;
+        this.progressCb( this.phrase, false );
 
       }
 
@@ -55,7 +56,20 @@ class KeyboardFieldInput {
 
     else {
 
-      this.phrase += String.fromCharCode( e.keyCode ).toLowerCase();
+      if (e.keyCode === /* delete */ 8) {
+        this.phrase = this.phrase.slice(0, -1);
+      } else {
+
+        let ch = String.fromCharCode( e.keyCode ).toLowerCase();
+
+        if (e.keyCode === /* dash */ 173) {
+          ch = "_";
+        }
+
+        if (ch.match( /[a-zA-Z_]+$/g ) ) {
+          this.phrase += ch;
+        }
+      }
       this.progressCb( this.phrase, false );
 
     }

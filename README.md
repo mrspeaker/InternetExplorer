@@ -4,13 +4,14 @@ Reddit ImgUr World, made for the Oculus Rift. You can use it in a normal ol' bro
 
 **Controls:**
 
-Type "/" to enter text mode (no gui yet - you have to type blindly!). Type a subreddit and hit enter, it will load any imgurls.
+Type "/" to enter text mode. Type a subreddit and hit enter, it will load any imgurls.
 
     WSAD: Move
     Arrows: Rotate
     Q/E: Up 'n down
     Space: Remove an obelisk.
     Enter: When you are looking at a "/r/<subreddit>" obelisk, loads the subreddit.
+    Z: reset sensor.
 
 ![reddit](https://cloud.githubusercontent.com/assets/129330/6380386/3bd59478-bd07-11e4-9e75-1526cd6aa7a0.png)
 

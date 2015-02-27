@@ -52,6 +52,12 @@ class KeyboardControls {
 
   }
 
+  zero () {
+
+    return this._keys[ 90 ];
+
+  }
+
   rot () {
 
     const left = this._keys[ 37 ] ? 1 : 0;
@@ -78,7 +84,7 @@ class KeyboardControls {
 
   y () {
 
-    const up = ( this._keys[ 90 ] || this._keys[ 87 ] ) ? 1 : 0;
+    const up = ( this._keys[ 87 ] ) ? 1 : 0;
     const down = this._keys[ 83 ] ? 1 : 0;
     return -up + down;
 
