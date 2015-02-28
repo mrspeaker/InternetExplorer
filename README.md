@@ -2,7 +2,7 @@
 
 Reddit ImgUr Explorer, made for the Oculus Rift.
 
-[Try it out](http://mrspeaker.github.io/worldt/) (really needs VR-enabled browser, but eh...)
+[Try it out on the internets](http://mrspeaker.github.io/worldt/) (really needs VR-enabled browser, but eh...)
 
 Loads subreddit ImgUrl images as a 3d gallery. You can use it in a normal ol' browser, but it doesn't feel like you're browsing the future: so go get a Rift and a browser with VR support - see [MozVR.com](http://www.mozvr.com) or [Chrome builds](http://blog.tojicode.com/2014/07/bringing-vr-to-chrome.html).
 
