@@ -75,15 +75,18 @@ renderer.shadowMapEnabled = true;
 document.body.appendChild( renderer.domElement );
 
 const scene = new THREE.Scene();
-scene.fog = new THREE.Fog( 0x001F4B, 20, 200 );
+scene.fog = new THREE.Fog( 0x103258, 20, 200 );
 
 const dolly = new THREE.Group();
 dolly.position.set( -15, 0.4, 5 );
 scene.add(dolly);
 
-const clouds = new Array(100)
-  .fill(true)
-  .map( () => Cloud.make({
+let clouds = [];
+for (var i = 0; i < 100; i++) { clouds.push(0); }
+  // damn you Chrome...
+//new Array(100)
+//  .fill(true)
+clouds = clouds.map( () => Cloud.make({
     x: Math.random() * 1000 - 500,
     y: 40,
     z: Math.random() * 1000 - 500

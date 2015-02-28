@@ -2,7 +2,7 @@
 
 Reddit ImgUr Explorer, made for the Oculus Rift.
 
-Loads subreddit ImgUrl images as a 3d gallery. You can use it in a normal ol' browser, but it doesn't feel like you're browsing the future: so go get a Rift and a browser with VR support - see [MozVR.com](http://www.mozvr.com).
+Loads subreddit ImgUrl images as a 3d gallery. You can use it in a normal ol' browser, but it doesn't feel like you're browsing the future: so go get a Rift and a browser with VR support - see [MozVR.com](http://www.mozvr.com) or [Chrome builds](http://blog.tojicode.com/2014/07/bringing-vr-to-chrome.html).
 
 **Controls:**
 
@@ -26,8 +26,9 @@ The base code (things in /lib: VRManager, VREffect etc) is from the [Sechelt dem
 ## Todos
 
   * SO many things.
-  * in-world instructions.
+  * making shadows
+  * in-world instructions
   * handle imgur galleries
   * non-square images
   * downscale big images (not even needed for Oculus rez)
-  * minecraft-style double-tap-to-run.
+  * minecraft-style double-tap-to-run
