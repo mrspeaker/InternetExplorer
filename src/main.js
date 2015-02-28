@@ -10,6 +10,20 @@ window.debug = false;
 
 let showTypeBox = false;
 
+const moves = {
+  vx: 0.0,
+  vz: 0.0,
+  ax: 0.0,
+  az: 0.0,
+
+  vrot: 0.0,
+  arot: 0.0,
+
+  power: 0.01,
+  rotPower: 0.0015,
+  drag: 0.95
+};
+
 const keys = new KeyboardControls();
 const field = new KeyboardFieldInput( ( prog, done ) => {
 
@@ -41,21 +55,6 @@ const field = new KeyboardFieldInput( ( prog, done ) => {
   }
 
 });
-
-const moves = {
-  vx: 0.0,
-  vz: 0.0,
-  ax: 0.0,
-  az: 0.0,
-
-  vrot: 0.0,
-  arot: 0.0,
-
-  power: 0.01,
-  rotPower: 0.0015,
-  drag: 0.95
-};
-
 
 const stats = new Stats();
 {
@@ -107,28 +106,21 @@ const manager = new WebVRManager( effect );
   /*const amb = new THREE.AmbientLight( 0x222222 );
   scene.add(amb);
 
-  const directionalLight = new THREE.DirectionalLight( 0xff0000, 0.85 );
-  directionalLight.position.set( 0, 2, 0 );
-  scene.add( directionalLight );
-
-
-  const hemiLight = new THREE.HemisphereLight( 0x0000ff, 0x00ff00, 0.6 );
-  scene.add( hemiLight );
   / *const pointy = new THREE.PointLight( 0xff44ee, 0, 30 );
   pointy.position.set( 0, -2, 0 );
   dolly.add( pointy );*/
 
-  var hemiLight = new THREE.HemisphereLight( 0xFFF5CE, 0xffffff, 0.6 );
+  const hemiLight = new THREE.HemisphereLight( 0xFFF5CE, 0xffffff, 0.6 );
   hemiLight.position.set( 0, 100, 0 );
   scene.add( hemiLight );
 
-  var dirLight = new THREE.DirectionalLight( 0xffffff, 1 );
-  dirLight.position.set( 0, 0.75, 1.5 );
-  dirLight.position.multiplyScalar(50);
+  const dirLight = new THREE.DirectionalLight( 0xffffff, 1 );
+  dirLight.position.set( 0, 30, 95 );
+  //dirLight.position.multiplyScalar(50);
   dirLight.castShadow = true;
   dirLight.shadowCameraVisible = true;
 
-  var d = 300;
+  const d = 10;
 
   /*dirLight.shadowCameraLeft = -d;
   dirLight.shadowCameraRight = d;
@@ -136,15 +128,14 @@ const manager = new WebVRManager( effect );
   dirLight.shadowCameraBottom = -d;
   */
   //dirLight.shadowCameraFar = 3500;
-  //dirLight.shadowBias = -0.0001;
-  dirLight.shadowCameraRight     = 15;
-  dirLight.shadowCameraLeft     = -5;
-  dirLight.shadowCameraTop      =  5;
-  dirLight.shadowCameraBottom   = -5;
-  dirLight.shadowDarkness = 0.35;
+//  dirLight.shadowBias = -0.0001;
+  dirLight.shadowCameraRight     = d;
+  dirLight.shadowCameraLeft     = -d;
+  dirLight.shadowCameraTop      =  d;
+  dirLight.shadowCameraBottom   = -d;
+  dirLight.shadowDarkness = 0.3;
 
   scene.add( dirLight );
-
 
 }
 
@@ -154,20 +145,11 @@ requestAnimationFrame( animate );
 window.addEventListener( "resize", onWindowResize, false );
 onWindowResize();
 
-const loadText = createCanvasPlane( 256, 60, ( ctx, w, h ) => {
-
-  ctx.textAlign = "center";
-  ctx.fillStyle = "#111";
-  ctx.fillRect(0, 0, w, h);
-  ctx.font = "22pt Helvetica";
-  ctx.fillStyle = "rgb(255, 255, 255)";
-  ctx.fillText( "Hit 'enter' to load.", w / 2, 30 );
-
-});
+const loadText = TextLinePlane( "Hit 'enter' to load." );
 loadText.position.set( 3, -10, 3 );
 scene.add( loadText );
 
-let typeyText = TextLinePlane("/");
+let typeyText = TextLinePlane( "/" );
 scene.add( typeyText );
 
 World.load(
@@ -192,9 +174,7 @@ function animate ( time ) {
 
   stats.begin();
 
-
   requestAnimationFrame( animate );
-
 
   controls.update();
 
@@ -263,7 +243,7 @@ const whatAreYouLookingAt = () => {
   const raycaster = new THREE.Raycaster( dolly.position, direction, 0, 10 );
   const intersects = raycaster.intersectObjects( World.mesh.children, true );
 
-  if (intersects.length) {
+  if ( intersects.length ) {
 
     const sign = intersects[ 0 ].object.parent;
     if ( sign && sign._data ) {
