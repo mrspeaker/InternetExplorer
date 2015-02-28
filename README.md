@@ -14,8 +14,8 @@ Loads subreddit ImgUrl images as a 3d gallery. You can use it in a normal ol' br
     Enter: When you are looking at a "/r/<subreddit>" obelisk, loads the subreddit.
     Z: reset VR sensor.
 
-![reddit](https://cloud.githubusercontent.com/assets/129330/6380386/3bd59478-bd07-11e4-9e75-1526cd6aa7a0.png)
-
+![redditbeach](https://cloud.githubusercontent.com/assets/129330/6426318/a8bcecd6-bf22-11e4-8855-a6369447ef42.jpg)
+![redditbeach2](https://cloud.githubusercontent.com/assets/129330/6426319/aa3b058e-bf22-11e4-838a-bbd2f7681e4f.jpg)
 
 ## Notes
 
