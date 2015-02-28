@@ -12,7 +12,7 @@ const Link = ( title = "title", url ) => {
 
   const text = createCanvasPlane( 256, 256, ( ctx, w, h ) => {
 
-    ctx.font = "22pt Helvetica";
+    ctx.font = "22pt Helvetica, Arial, Sans-Serif";
     ctx.fillStyle = "rgba(255, 255, 255, 0.8)";
     wrapCanvasText( ctx, title, 0, 30, w, 30 );
 

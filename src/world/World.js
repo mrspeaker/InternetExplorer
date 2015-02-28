@@ -1,26 +1,18 @@
 import RedditAPI from "../RedditAPI";
 import SkyBox from "./SkyBox";
 import ground from "./ground";
-import Obelisk from "./Obelisk";
-import ImgUrMesh from "./ImgUrMesh";
 import Sign from "./Sign";
+import Instructions from "./Instructions";
 import Link from "./Link";
 
 const world = new THREE.Group();
 world.add( SkyBox() );
 world.add( ground );
 
-const ob = Obelisk();
-ob.scale.y = 0.5;
-ob.position.set( -20, 3.5, 18 );
-ob.rotation.y = Math.PI / 4;
+const ob = Instructions();
+ob.position.set( -20, 0, 15 );
+ob.rotation.y = Math.PI + Math.PI / 4;
 world.add( ob );
-
-const imgMesh = ImgUrMesh( "dAvWkN8.jpg" );
-imgMesh.position.copy( ob.position );
-imgMesh.rotation.y = ob.rotation.y;
-imgMesh.translateZ( -0.55)
-world.add( imgMesh );
 
 const positionSigns = ( signs, pos = { x: 0, y: 0, z: 0 }, rot ) => {
 
