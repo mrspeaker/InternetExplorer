@@ -1,8 +1,8 @@
 const speed = 0.01;
 
-const material = new THREE.MeshLambertMaterial({ color: 0xeeeeee });
+const material = new THREE.MeshLambertMaterial( { color: 0xeeeeee } );
 
-const make = (pos) => {
+const make = ( { x, y, z } ) => {
 
   const geometry = new THREE.BoxGeometry(
       Math.random() * 30 + 15,
@@ -11,9 +11,9 @@ const make = (pos) => {
   );
   const mesh = new THREE.Mesh( geometry, material );
 
-  pos = new THREE.Vector3( pos.x, pos.y, pos.z );
-  mesh.position.copy( pos );
-  mesh.lookAt( pos.add( new THREE.Vector3( 0, 0, 1 ) ) );
+  const posVec3 = new THREE.Vector3( x, y, z );
+  mesh.position.copy( posVec3 );
+  mesh.lookAt( posVec3.add( new THREE.Vector3( 0, 0, 1 ) ) );
 
   return mesh;
 

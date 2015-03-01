@@ -42,7 +42,7 @@ const field = new KeyboardFieldInput( ( prog, done ) => {
 
     const { x, y, z } = dolly.position;
 
-    World.load( prog, {x, y, z}, dolly.rotation.y + Math.PI);
+    World.load( prog, {x, y, z}, dolly.rotation.y + Math.PI );
 
   } else {
 
@@ -81,12 +81,12 @@ const dolly = new THREE.Group();
 dolly.position.set( -15, 0.4, 5 );
 scene.add(dolly);
 
-let clouds = [];
-for (var i = 0; i < 100; i++) { clouds.push(0); }
-  // damn you Chrome...
-//new Array(100)
-//  .fill(true)
-clouds = clouds.map( () => Cloud.make({
+// damn you Chrome...
+// const clouds = new Array( 100 ).fill( true )
+const clouds = new Array( 100 )
+  .join()
+  .split( "," )
+  .map( () => Cloud.make({
     x: Math.random() * 1000 - 500,
     y: 40,
     z: Math.random() * 1000 - 500
@@ -95,7 +95,7 @@ clouds = clouds.map( () => Cloud.make({
 clouds.forEach(c => scene.add( c ));
 
 const camera = new THREE.PerspectiveCamera( 60, window.innerWidth / window.innerHeight, 1, 20000 );
-camera.position.set(0, 1, 0);
+camera.position.set( 0, 1, 0 );
 dolly.add( camera );
 dolly.rotation.y = - Math.PI / 2;
 
@@ -106,12 +106,14 @@ const manager = new WebVRManager( effect );
 
 // lights
 {
-  /*const amb = new THREE.AmbientLight( 0x222222 );
+  /*
+  const amb = new THREE.AmbientLight( 0x222222 );
   scene.add(amb);
 
-  / *const pointy = new THREE.PointLight( 0xff44ee, 0, 30 );
+  const pointy = new THREE.PointLight( 0xff44ee, 0, 30 );
   pointy.position.set( 0, -2, 0 );
-  dolly.add( pointy );*/
+  dolly.add( pointy );
+  */
 
   const hemiLight = new THREE.HemisphereLight( 0xFFF5CE, 0xffffff, 0.6 );
   hemiLight.position.set( 0, 100, 0 );
@@ -125,17 +127,12 @@ const manager = new WebVRManager( effect );
 
   const d = 10;
 
-  /*dirLight.shadowCameraLeft = -d;
+  // dirLight.shadowCameraFar = 3500;
+  // dirLight.shadowBias = -0.0001;
   dirLight.shadowCameraRight = d;
+  dirLight.shadowCameraLeft = -d;
   dirLight.shadowCameraTop = d;
   dirLight.shadowCameraBottom = -d;
-  */
-  //dirLight.shadowCameraFar = 3500;
-//  dirLight.shadowBias = -0.0001;
-  dirLight.shadowCameraRight     = d;
-  dirLight.shadowCameraLeft     = -d;
-  dirLight.shadowCameraTop      =  d;
-  dirLight.shadowCameraBottom   = -d;
   dirLight.shadowDarkness = 0.3;
 
   scene.add( dirLight );

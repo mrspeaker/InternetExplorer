@@ -41,15 +41,16 @@ const positionSigns = ( signs, pos = { x: 0, y: 0, z: 0 }, rot ) => {
 
 const loadSub = ( subReddit ) => RedditAPI
   .load( subReddit )
-  .then( posts => posts.map( ({ data: { title, url } }) => Sign( title, url ) ) );
+  .then( posts => posts.map(
+    ({ data: { title, url } }) => Sign( title, url )
+  ) );
 
 const findRelatedSubs = ( subReddit ) => RedditAPI
   .loadAboutSub( subReddit )
-  .then(
-    about => about.description
-      .match( /\/r\/[a-zA-Z_]+/g )
-      .map( sub => sub.toLowerCase() )
-      .filter( ( value, index, self ) => self.indexOf( value ) === index )
+  .then( about => about.description
+    .match( /\/r\/[a-zA-Z_]+/g )
+    .map( sub => sub.toLowerCase() )
+    .filter( ( value, index, self ) => self.indexOf( value ) === index )
   )
   .then( related => related.map( sub => Link( sub ) ) )
 

@@ -7,7 +7,7 @@ const colorTop = new THREE.Color( 0x001F4B );
 const colorMiddle = new THREE.Color( 0x1A3C62 );
 const colorBottom = new THREE.Color( 0x596F87 );
 
-for ( let i = 0, l = faces.length; i < l; i ++ ) {
+for ( let i = 0, l = faces.length; i < l; i++ ) {
 
   const face = faces[ i ];
 
