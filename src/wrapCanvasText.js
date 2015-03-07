@@ -1,28 +1,21 @@
-function wrapText( context, text, x, y, maxWidth, lineHeight ) {
+function wrapText ( ctx, text, x, y, maxWidth, lineHeight ) {
 
-  const words = text.split(" ");
-  let line = "";
+  const drawLine = ( line, i ) => ctx.fillText( line, x, y + ( i * lineHeight ) );
 
-  for ( let n = 0; n < words.length; n++ ) {
+  const lines = text.split(" ").reduce( (ac, word, i) => {
 
-    const testLine = line + words[ n ] + " ";
-    const metrics = context.measureText( testLine );
-    const testWidth = metrics.width;
+    const line = ac.curr + word + " ";
+    const overwidth = ctx.measureText( line ).width > maxWidth && i > 0;
 
-    if ( testWidth > maxWidth && n > 0 ) {
-
-      context.fillText( line, x, y );
-      line = words[ n ] + " ";
-      y += lineHeight;
-
-    } else {
-
-      line = testLine;
-
+    return {
+      lines: overwidth ? [...ac.lines, ac.curr] : ac.lines,
+      curr: overwidth ? word + " " : line
     }
-  }
 
-  context.fillText( line, x, y );
+  }, { lines: [], curr: "" });
+
+  // Add the final line, and draw them
+  [...lines.lines, lines.curr].forEach( drawLine );
 
 }
 

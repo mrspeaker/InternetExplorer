@@ -17,7 +17,7 @@ class RedditAPI {
         { param: "jsonp" },
         ( err, data ) => {
 
-          err ? reject (err) : resolve( data.data.children )
+          err ? reject ( err ) : resolve( data.data.children )
 
         });
 
@@ -34,7 +34,7 @@ class RedditAPI {
         { param: "jsonp" },
         ( err, data ) => {
 
-          err ? reject (err) : resolve( data.data )
+          err ? reject ( err ) : resolve( data.data )
 
         }
       )

@@ -120,15 +120,14 @@ const manager = new WebVRManager( effect );
   scene.add( hemiLight );
 
   const dirLight = new THREE.DirectionalLight( 0xffffff, 1 );
-  dirLight.position.set( 0, 30, 95 );
-  //dirLight.position.multiplyScalar(50);
+  dirLight.position.set( 0, 100, 55 );
   dirLight.castShadow = true;
   dirLight.shadowCameraVisible = true;
 
-  const d = 10;
+  const d = 100;
 
-  // dirLight.shadowCameraFar = 3500;
-  // dirLight.shadowBias = -0.0001;
+  dirLight.shadowCameraFar = 3500;
+  //dirLight.shadowBias = -0.001;
   dirLight.shadowCameraRight = d;
   dirLight.shadowCameraLeft = -d;
   dirLight.shadowCameraTop = d;
