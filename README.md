@@ -1,4 +1,4 @@
-# Worldt
+# Internet Explorer
 
 Reddit ImgUr Explorer, made for the Oculus Rift.
 
