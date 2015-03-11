@@ -7,7 +7,7 @@ class KeyboardFieldInput {
 
     this.progressCb = progressCb;
 
-    document.addEventListener( "keydown", this.onDown.bind(this), false );
+    document.addEventListener( "keydown", this.onDown.bind( this ), false );
 
   }
 

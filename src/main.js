@@ -42,15 +42,15 @@ const field = new KeyboardFieldInput( ( prog, done ) => {
 
     const { x, y, z } = dolly.position;
 
-    World.load( prog, {x, y, z}, dolly.rotation.y + Math.PI );
+    World.load( prog, { x, y, z }, dolly.rotation.y + Math.PI );
 
   } else {
 
       showTypeBox = true;
-      scene.remove(typeyText);
-      typeyText = TextLinePlane("/" + (prog ? prog : ""));
-      typeyText.scale.set(0.005, 0.005, 0.005);
-      scene.add(typeyText);
+      scene.remove( typeyText );
+      typeyText = TextLinePlane( "/" + ( prog ? prog : "" ));
+      typeyText.scale.set( 0.005, 0.005, 0.005 );
+      scene.add( typeyText );
 
   }
 

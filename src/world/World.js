@@ -26,7 +26,7 @@ const positionSigns = ( signs, pos = { x: 0, y: 0, z: 0 }, rot ) => {
 
   return signs.map ( ( sign, i ) => {
 
-    sign.rotation.y = placer.rotation.y + ((i % 2 === 0 ? -1 : 1) * Math.PI / 2);
+    sign.rotation.y = placer.rotation.y + ( ( i % 2 === 0 ? -1 : 1 ) * Math.PI / 2 );
     sign.position.copy( placer.position );
     sign.translateZ( -9 ); // Corridor width
 

@@ -18,7 +18,7 @@ const createCanvasPlane = function ( w, h, drawFunc ) {
     transparent: true
   });
 
-  const geometry = new THREE.PlaneBufferGeometry( canvas.width, canvas.height, 1, 1 );
+  const geometry = new THREE.PlaneBufferGeometry( w, h, 1, 1 );
   const planeMesh = new THREE.Mesh( geometry, material );
 
   planeMesh.scale.set( scale, scale, scale );

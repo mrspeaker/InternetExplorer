@@ -11,7 +11,7 @@ const cachedJsonP = ( url, params, cb ) => {
 
     const deets = cache[ key ];
 
-    if ( Date.now() - deets.time > 1000 * 60 * 10) {
+    if ( Date.now() - deets.time > 1000 * 60 * 10 ) {
 
       console.log( "Removed from cache: ", key );
       delete cache[ key ];
@@ -30,7 +30,7 @@ const cachedJsonP = ( url, params, cb ) => {
 
   }
 
-  jsonp( url, params, (err, data) => {
+  jsonp( url, params, ( err, data ) => {
 
     if ( data ) {
 
