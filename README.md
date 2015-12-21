@@ -1,6 +1,6 @@
 # Internet Explorer
 
-Reddit ImgUr Explorer, made for the Oculus Rift.
+Reddit ImgUr Explorer, made for the VR devices.
 
 [Try it out on the internets](http://mrspeaker.github.io/InternetExplorer/) (really needs VR-enabled browser, but eh...)
 
