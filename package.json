@@ -1,8 +1,26 @@
 {
-  "jspm": {
-    "dependencies": {
-      "jsonp": "npm:jsonp@^0.1.0",
-      "stats-js": "npm:stats-js@^1.0.0-alpha1"
-    }
+  "name": "InternetExplorer",
+  "version": "1.0.0",
+  "description": "Reddit ImgUr Explorer, made for the Oculus Rift.",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "budo index.js --live -- -t [ babelify --presets [ es2015 react ] --plugins [ transform-class-properties ]  ]"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mrspeaker/InternetExplorer.git"
+  },
+  "keywords": [],
+  "author": "Mr Speaker",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mrspeaker/InternetExplorer/issues"
+  },
+  "homepage": "https://github.com/mrspeaker/InternetExplorer#readme",
+  "devDependencies": {
+    "babel-plugin-transform-class-properties": "^6.3.13",
+    "babel-preset-es2015": "^6.3.13",
+    "babelify": "^7.2.0",
+    "budo": "^7.0.4"
   }
 }
