@@ -49,6 +49,6 @@ const cachedJsonP = ( url, params, cb ) => {
 
   });
 
-}
+};
 
 export default cachedJsonP;

@@ -167,7 +167,7 @@ function onWindowResize () {
   camera.updateProjectionMatrix();
   effect.setSize( window.innerWidth, window.innerHeight );
 
-};
+}
 
 function animate ( time ) {
 

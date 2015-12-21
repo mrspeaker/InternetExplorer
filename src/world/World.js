@@ -54,7 +54,9 @@ const findRelatedSubs = ( subReddit ) => RedditAPI
   )
   .then( related => related.map( sub => Link( sub ) ) )
 
-const load = ( subReddit, pos, rot ) => Promise.all([
+const load = ( subReddit, pos, rot ) => {
+  console.log(subReddit);
+  return Promise.all([
     loadSub( subReddit ),
     findRelatedSubs( subReddit )
   ])
@@ -66,6 +68,7 @@ const load = ( subReddit, pos, rot ) => Promise.all([
     return sign;
 
   } ) );
+}
 
 export default {
   load,

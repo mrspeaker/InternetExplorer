@@ -21,9 +21,8 @@ Loads subreddit ImgUrl images as a 3d gallery. You can use it in a normal ol' br
 
 ## Notes
 
-The code uses a bunch of ES6 stuff: I'm using [jspm.io](http://jspm.io/) for building.
-
-The base code (things in /lib: VRManager, VREffect etc) is from the [Sechelt demo](https://github.com/MozVR/sechelt)
+  * The base code (things in /lib: VRManager, VREffect etc) is from the [Sechelt demo](https://github.com/MozVR/sechelt)
+  * If data isn't loading, make sure you aren't ad-blocking reddit.
 
 ## Todos
 
