@@ -10,7 +10,7 @@ function wrapText ( ctx, text, x, y, maxWidth, lineHeight ) {
     return {
       lines: overwidth ? [...ac.lines, ac.curr] : ac.lines,
       curr: overwidth ? word + " " : line
-    }
+    };
 
   }, { lines: [], curr: "" });
 

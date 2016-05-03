@@ -1,5 +1,5 @@
-import createCanvasPlane from "../createCanvasPlane";
-import wrapCanvasText from "../wrapCanvasText";
+import createCanvasPlane from "../primatives/createCanvasPlane";
+import wrapCanvasText from "../primatives/wrapCanvasText";
 import ImgUrMesh from "./ImgUrMesh";
 import Obelisk from "./Obelisk";
 

@@ -10,7 +10,7 @@ class RedditAPI {
 
   load ( subReddit ) {
 
-    console.log("subre", this.redditURL( subReddit ))
+    console.log("subre", this.redditURL( subReddit ));
 
     return new Promise( ( resolve, reject ) => {
 
@@ -18,8 +18,8 @@ class RedditAPI {
         this.redditURL( subReddit ),
         { param: "jsonp" },
         ( err, data ) => {
-          console.log("in thi herere", err)
-          err ? reject ( err ) : resolve( data.data.children )
+          console.log("in thi herere", err);
+          err ? reject ( err ) : resolve( data.data.children );
         });
 
     });
@@ -35,10 +35,10 @@ class RedditAPI {
         { param: "jsonp" },
         ( err, data ) => {
 
-          err ? reject ( err ) : resolve( data.data )
+          err ? reject ( err ) : resolve( data.data );
 
         }
-      )
+      );
 
     });
 

@@ -1,13 +1,14 @@
 import KeyboardControls from "./KeyboardControls";
 import KeyboardFieldInput from "./KeyboardFieldInput";
-import createCanvasPlane from "./createCanvasPlane";
-import TextLinePlane from "./TextLinePlane";
+import TextLinePlane from "./primatives/TextLinePlane";
+
 import World from "./world/World";
-import Stats from "stats-js";
+import Stats from "./stats";
 import Cloud from "./world/Cloud";
+import addLights from "./addLights";
 
 window.debug = false;
-
+const THREE = window.THREE;
 let showTypeBox = false;
 
 const moves = {
@@ -25,7 +26,7 @@ const moves = {
 };
 
 const keys = new KeyboardControls();
-const field = new KeyboardFieldInput( ( prog, done ) => {
+new KeyboardFieldInput( ( prog, done ) => {
 
   if ( done ) {
 
@@ -46,33 +47,22 @@ const field = new KeyboardFieldInput( ( prog, done ) => {
 
   } else {
 
-      showTypeBox = true;
-      scene.remove( typeyText );
-      typeyText = TextLinePlane( "/" + ( prog ? prog : "" ));
-      typeyText.scale.set( 0.005, 0.005, 0.005 );
-      scene.add( typeyText );
+    showTypeBox = true;
+    scene.remove( typeyText );
+    typeyText = TextLinePlane( "/" + ( prog ? prog : "" ));
+    typeyText.scale.set( 0.005, 0.005, 0.005 );
+    scene.add( typeyText );
 
   }
 
 });
 
-const stats = new Stats();
-{
-  const dom = stats.domElement;
-  const style = dom.style;
-  stats.setMode( 0 );
-  style.position = "absolute";
-  style.left = "0px";
-  style.top = "0px";
-  document.body.appendChild( dom );
-}
+const stats = Stats();
 
 const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.autoClear = false;
 renderer.setClearColor( 0x222222 );
 renderer.shadowMapEnabled = true;
-
-document.body.appendChild( renderer.domElement );
 
 const scene = new THREE.Scene();
 scene.fog = new THREE.Fog( 0x103258, 20, 200 );
@@ -81,16 +71,14 @@ const dolly = new THREE.Group();
 dolly.position.set( -15, 0.4, 5 );
 scene.add(dolly);
 
-// damn you Chrome...
-// const clouds = new Array( 100 ).fill( true )
-const clouds = new Array( 100 )
-  .join()
-  .split( "," )
-  .map( () => Cloud.make({
+const clouds = Array.from(
+  new Array( 100 ),
+  () => Cloud.make({
     x: Math.random() * 1000 - 500,
     y: 40,
     z: Math.random() * 1000 - 500
-  }) )
+  })
+);
 
 clouds.forEach(c => scene.add( c ));
 
@@ -102,47 +90,12 @@ dolly.rotation.y = - Math.PI / 2;
 // Effect and Controls for VR, Initialize the WebVR manager
 const effect = new THREE.VREffect( renderer );
 const controls = new THREE.VRControls( camera );
-const manager = new WebVRManager( effect );
+const manager = new window.WebVRManager( effect );
 
 // lights
-{
-  /*
-  const amb = new THREE.AmbientLight( 0x222222 );
-  scene.add(amb);
-
-  const pointy = new THREE.PointLight( 0xff44ee, 0, 30 );
-  pointy.position.set( 0, -2, 0 );
-  dolly.add( pointy );
-  */
-
-  const hemiLight = new THREE.HemisphereLight( 0xFFF5CE, 0xffffff, 0.6 );
-  hemiLight.position.set( 0, 100, 0 );
-  scene.add( hemiLight );
-
-  const dirLight = new THREE.DirectionalLight( 0xffffff, 1 );
-  dirLight.position.set( 0, 100, 55 );
-  dirLight.castShadow = true;
-  dirLight.shadowCameraVisible = true;
-
-  const d = 100;
-
-  dirLight.shadowCameraFar = 3500;
-  //dirLight.shadowBias = -0.001;
-  dirLight.shadowCameraRight = d;
-  dirLight.shadowCameraLeft = -d;
-  dirLight.shadowCameraTop = d;
-  dirLight.shadowCameraBottom = -d;
-  dirLight.shadowDarkness = 0.3;
-
-  scene.add( dirLight );
-
-}
+addLights( scene );
 
 scene.add( World.mesh );
-
-requestAnimationFrame( animate );
-window.addEventListener( "resize", onWindowResize, false );
-onWindowResize();
 
 const loadText = TextLinePlane( "Hit 'enter' to load." );
 loadText.position.set( 3, -10, 3 );
@@ -159,7 +112,6 @@ World.load(
 
 dolly.translateZ( 20 );
 dolly.rotation.y -= 0.2;
-
 
 function onWindowResize () {
 
@@ -247,8 +199,8 @@ const whatAreYouLookingAt = () => {
     const sign = intersects[ 0 ].object.parent;
     if ( sign && sign._data ) {
 
-      const title = sign._data.title
-      const isSubReddit = title.match( /\/r\/[a-zA-Z_]+$/g )
+      const title = sign._data.title;
+      const isSubReddit = title.match( /\/r\/[a-zA-Z_]+$/g );
 
       sign.scale.x = 1 + ( ( Math.sin( Date.now() / 1000 ) + 1 ) * 0.03 );
 
@@ -289,6 +241,16 @@ const whatAreYouLookingAt = () => {
 
   }
 
+};
+
+function run () {
+
+  document.body.appendChild( renderer.domElement );
+
+  requestAnimationFrame( animate );
+  window.addEventListener( "resize", onWindowResize, false );
+  onWindowResize();
+
 }
 
-export default {};
+export default () => { run(); };
