@@ -22,7 +22,7 @@ const moves = {
 
   power: 0.01,
   rotPower: 0.0015,
-  drag: 0.95
+  drag: 0.9
 };
 
 const keys = new KeyboardControls();

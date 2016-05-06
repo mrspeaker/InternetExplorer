@@ -5,6 +5,7 @@ import Sign from "./Sign";
 import Instructions from "./Instructions";
 import Link from "./Link";
 
+const THREE = window.THREE;
 const world = new THREE.Group();
 world.add( SkyBox() );
 world.add( ground );
@@ -21,7 +22,7 @@ const positionSigns = ( signs, pos = { x: 0, y: 0, z: 0 }, rot ) => {
   placer.rotation.y = rot !== undefined ? rot : Math.random() * (2 * Math.PI);
 
   const off = Math.random() * 2 - 1;
-  const dir = Math.random() < 0.5 ? Math.sin : Math.cos
+  const dir = Math.random() < 0.5 ? Math.sin : Math.cos;
   const dist = (Math.random() * 13 | 0) + 5;
 
   return signs.map ( ( sign, i ) => {
@@ -37,7 +38,7 @@ const positionSigns = ( signs, pos = { x: 0, y: 0, z: 0 }, rot ) => {
 
   });
 
-}
+};
 
 const loadSub = ( subReddit ) => RedditAPI
   .load( subReddit )
@@ -52,22 +53,23 @@ const findRelatedSubs = ( subReddit ) => RedditAPI
     .map( sub => sub.toLowerCase() )
     .filter( ( value, index, self ) => self.indexOf( value ) === index )
   )
-  .then( related => related.map( sub => Link( sub ) ) )
+  .then( related => related.map( sub => Link( sub ) ) );
 
-const load = ( subReddit, pos, rot ) => {
-  return Promise.all([
-    loadSub( subReddit ),
-    findRelatedSubs( subReddit )
-  ])
+const load = ( subReddit, pos, rot ) => Promise.all([
+  loadSub( subReddit ),
+  findRelatedSubs( subReddit )
+])
   .then( ([ posts, links ]) => posts.concat( links ).sort( () => Math.random() < 0.5 ) )
   .then( signs => positionSigns( signs, pos, rot ) )
-  .then( signs => signs.map( sign => {
+  .then( signs => signs.map( (sign, i) => {
 
-    world.add( sign );
+    setTimeout(() => {
+      world.add( sign );
+    }, i * 100);
+
     return sign;
 
   } ) );
-}
 
 export default {
   load,

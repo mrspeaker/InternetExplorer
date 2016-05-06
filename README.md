@@ -29,7 +29,8 @@ Loads subreddit ImgUrl images as a 3d gallery. You can use it in a normal ol' br
 ## Todos
 
   * mouse looks left/right (same as arrow keys)
-  * R should reset sensor
+  * R should reset sensor (not Z, or and Z)
+  * typing doesn't disable movment
   * making shadows
   * handle imgur galleries
   * stagger image loading (tonnes of requests is slow in firefox)
