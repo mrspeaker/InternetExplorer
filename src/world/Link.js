@@ -1,6 +1,6 @@
-import createCanvasPlane from "../primatives/createCanvasPlane";
-import wrapCanvasText from "../primatives/wrapCanvasText";
-import Obelisk from "./Obelisk";
+import createCanvasPlane from "../primatives/createCanvasPlane.js";
+import wrapCanvasText from "../primatives/wrapCanvasText.js";
+import Obelisk from "./Obelisk.js";
 
 const Link = ( title = "title", url ) => {
 

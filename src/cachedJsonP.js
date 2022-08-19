@@ -1,4 +1,4 @@
-import jsonp from "jsonp";
+import jsonp from "../lib/jsonp.js";
 
 const cachedJsonP = ( url, params, cb ) => {
 

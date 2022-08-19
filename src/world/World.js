@@ -1,9 +1,9 @@
-import RedditAPI from "../RedditAPI";
-import SkyBox from "./SkyBox";
-import ground from "./ground";
-import Sign from "./Sign";
-import Instructions from "./Instructions";
-import Link from "./Link";
+import RedditAPI from "../RedditAPI.js";
+import SkyBox from "./SkyBox.js";
+import ground from "./ground.js";
+import Sign from "./Sign.js";
+import Instructions from "./Instructions.js";
+import Link from "./Link.js";
 
 const THREE = window.THREE;
 const world = new THREE.Group();

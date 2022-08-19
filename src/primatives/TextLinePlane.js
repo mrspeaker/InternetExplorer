@@ -1,4 +1,4 @@
-import createCanvasPlane from "./createCanvasPlane";
+import createCanvasPlane from "./createCanvasPlane.js";
 
 const TextLinePlane = text => createCanvasPlane( 256, 60, ( ctx, w, h ) => {
 

@@ -1,6 +1,6 @@
-import createCanvasPlane from "../primatives/createCanvasPlane";
-import ImgUrMesh from "./ImgUrMesh";
-import Obelisk from "./Obelisk";
+import createCanvasPlane from "../primatives/createCanvasPlane.js";
+import ImgUrMesh from "./ImgUrMesh.js";
+import Obelisk from "./Obelisk.js";
 
 const Instructions = () => {
 

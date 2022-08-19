@@ -1,4 +1,4 @@
-import jsonp from "./cachedJsonP";
+import jsonp from "./cachedJsonP.js";
 
 class RedditAPI {
 

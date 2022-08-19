@@ -4,7 +4,7 @@
   "description": "Reddit ImgUr Explorer, made for the Oculus Rift.",
   "main": "index.js",
   "scripts": {
-    "start": "budo index.js --live -- -t [ babelify --presets [ es2015 ] --plugins [ transform-class-properties ]  ]"
+    "start": "budo index.js"
   },
   "repository": {
     "type": "git",
@@ -18,14 +18,8 @@
   },
   "homepage": "https://github.com/mrspeaker/InternetExplorer#readme",
   "devDependencies": {
-    "babel-plugin-transform-class-properties": "^6.3.13",
-    "babel-preset-es2015": "^6.3.13",
-    "babelify": "^7.2.0",
-    "budo": "^7.0.4"
+    "budo": "^11.7.0"
   },
   "dependencies": {
-    "jsonp": "^0.2.0",
-    "npm": "^3.8.8",
-    "stats-js": "^1.0.0-alpha1"
   }
 }

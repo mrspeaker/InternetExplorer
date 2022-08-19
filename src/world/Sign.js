@@ -1,7 +1,7 @@
-import createCanvasPlane from "../primatives/createCanvasPlane";
-import wrapCanvasText from "../primatives/wrapCanvasText";
-import ImgUrMesh from "./ImgUrMesh";
-import Obelisk from "./Obelisk";
+import createCanvasPlane from "../primatives/createCanvasPlane.js";
+import wrapCanvasText from "../primatives/wrapCanvasText.js";
+import ImgUrMesh from "./ImgUrMesh.js";
+import Obelisk from "./Obelisk.js";
 
 const Sign = ( title = "title", url ) => {
 

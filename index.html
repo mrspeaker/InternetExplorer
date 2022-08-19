@@ -1,29 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <title>Internet Explorer</title>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
-    <style>
-      html, body {
-        margin: 0px;
-        overflow: hidden;
-      }
-    </style>
-  </head>
+    <head>
+        <title>Internet Explorer</title>
+        <meta charset="utf-8" />
+        <meta
+            name="viewport"
+            content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0"
+        />
+        <style>
+            html,
+            body {
+                margin: 0px;
+                overflow: hidden;
+            }
+        </style>
+    </head>
 
-  <body>
-    <script src="lib/three.min.js"></script>
-    <script src="lib/VRControls.js"></script>
-    <script src="lib/VREffect.js"></script>
-    <script>
-    window.WebVRConfig = {
-      MOUSE_KEYBOARD_CONTROLS_DISABLED: true
-    };
-    </script>
-    <script src="lib/webvr-polyfill.js"></script>
-    <script src="lib/webvr-manager.js"></script>
+    <body>
+        <script src="lib/three.min.js"></script>
+        <script src="lib/VRControls.js"></script>
+        <script src="lib/VREffect.js"></script>
+        <script>
+            window.WebVRConfig = {
+                MOUSE_KEYBOARD_CONTROLS_DISABLED: true,
+            };
+        </script>
+        <script src="lib/webvr-polyfill.js"></script>
+        <script src="lib/webvr-manager.js"></script>
 
-    <script src="index.js"></script>
-  </body>
+        <script src="index.js" type="module"></script>
+    </body>
 </html>

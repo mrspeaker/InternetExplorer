@@ -1,11 +1,10 @@
-import KeyboardControls from "./KeyboardControls";
-import KeyboardFieldInput from "./KeyboardFieldInput";
-import TextLinePlane from "./primatives/TextLinePlane";
+import KeyboardControls from "./KeyboardControls.js";
+import KeyboardFieldInput from "./KeyboardFieldInput.js";
+import TextLinePlane from "./primatives/TextLinePlane.js";
 
-import World from "./world/World";
-import Stats from "./stats";
-import Cloud from "./world/Cloud";
-import addLights from "./addLights";
+import World from "./world/World.js";
+import Cloud from "./world/Cloud.js";
+import addLights from "./addLights.js";
 
 window.debug = false;
 const THREE = window.THREE;
@@ -57,7 +56,6 @@ new KeyboardFieldInput( ( prog, done ) => {
 
 });
 
-const stats = Stats();
 
 const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.autoClear = false;
@@ -123,7 +121,6 @@ function onWindowResize () {
 
 function animate ( time ) {
 
-  stats.begin();
 
   requestAnimationFrame( animate );
 
@@ -184,7 +181,6 @@ function animate ( time ) {
 
   clouds.forEach(c => Cloud.move( c ));
 
-  stats.end();
 
 }
 
