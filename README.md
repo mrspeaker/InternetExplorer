@@ -21,10 +21,8 @@ Loads subreddit ImgUrl images as a 3d gallery. You can use it in a normal ol' br
 
 ## Notes
 
-  * To set up: `npm install`
-  * To run: `npm start`. Browse at `http://localhost:9966`.
   * The base code (things in /lib: VRManager, VREffect etc) is from the [Sechelt demo](https://github.com/MozVR/sechelt)
-  * If data isn't loading, make sure you aren't ad-blocking reddit.
+  * If data isn't loading, make sure you aren't ad-blocking/anti-tracking reddit. Firefox is blocking reddit api calls by default
 
 ## Todos
 
@@ -36,4 +34,4 @@ Loads subreddit ImgUrl images as a 3d gallery. You can use it in a normal ol' br
   * stagger image loading (tonnes of requests is slow in firefox)
   * non-square images
   * downscale big images (not even needed for Oculus rez)
-  * minecraft-style double-tap-to-run
+  * faster moving. Double-tap-to-run, or shift run. 
